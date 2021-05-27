@@ -1,14 +1,12 @@
 package com.project;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
-    private ArrayList<Integer> tilesValue;
-    private ArrayList<Integer> tilesLogic;
+    private List<Integer> tilesValue;
 
-    Board() {
-        tilesValue = new ArrayList<>();
-        tilesLogic = new ArrayList<>();
+    public Board(List<Integer> tilesValue) {
+        this.tilesValue = tilesValue;
     }
 
     public int getSize() {
@@ -25,8 +23,5 @@ public class Board {
 
     public int getTileValue(int x, int y) {
         return tilesValue.get(x * tilesValue.size() + y).intValue();
-    }
-    public int getTileLogic(int x, int y) {
-        return tilesLogic.get(x * tilesValue.size() + y).intValue();
     }
 }

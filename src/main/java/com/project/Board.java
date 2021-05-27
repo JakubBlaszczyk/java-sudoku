@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 public class Board {
     private ArrayList<Integer> tilesValue;
-    private ArrayList<Integer> tilesLogic;
 
-    Board() {
+    public Board() {
         tilesValue = new ArrayList<>();
-        tilesLogic = new ArrayList<>();
     }
 
     public int getSize() {
@@ -26,7 +24,10 @@ public class Board {
     public int getTileValue(int x, int y) {
         return tilesValue.get(x * tilesValue.size() + y).intValue();
     }
-    public int getTileLogic(int x, int y) {
-        return tilesLogic.get(x * tilesValue.size() + y).intValue();
+
+
+    public void setTileValue(int x, int y, int value) {
+        this.tilesValue.set(x * tilesValue.size() + y, Integer.valueOf(value));
     }
+
 }

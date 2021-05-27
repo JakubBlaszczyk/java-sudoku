@@ -1,12 +1,12 @@
 package com.project;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
-    private ArrayList<Integer> tilesValue;
+    private List<Integer> tilesValue;
 
-    public Board() {
-        tilesValue = new ArrayList<>();
+    public Board(List<Integer> tilesValue) {
+        this.tilesValue = tilesValue;
     }
 
     public int getSize() {
@@ -24,10 +24,4 @@ public class Board {
     public int getTileValue(int x, int y) {
         return tilesValue.get(x * tilesValue.size() + y).intValue();
     }
-
-
-    public void setTileValue(int x, int y, int value) {
-        this.tilesValue.set(x * tilesValue.size() + y, Integer.valueOf(value));
-    }
-
 }

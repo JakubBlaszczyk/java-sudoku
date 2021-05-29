@@ -55,7 +55,6 @@ public class Sudoku {
                     }
                 }
             } else {
-                // TODO fetch next sudoku to solve
                 if (!sudokusToCome.isEmpty()) {
                     board = sudokusToCome.remove(sudokusToCome.size() - 1);
                 }
@@ -105,22 +104,28 @@ public class Sudoku {
         // if it needs refreshing breeze through line
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+            int count = 0;
             for (int i = 0; i < board.getSize(); ++i) {
                 if (board.getTileValue(i, y) != 0) {
                     tilesPossibilities.set(posInPossibilities + board.getTileValue(i, y) - 1, true);
+                    ++count;
                 }
             }
+            tilesLogic.set(x * board.getSize() + y, Integer.valueOf(count));
         }
     }
 
     private void ColumnLogic(int x, int y) {
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+            int count = 0;
             for (int i = 0; i < board.getSize(); ++i) {
                 if (board.getTileValue(x, i) != 0) {
                     tilesPossibilities.set(posInPossibilities + board.getTileValue(x, i) - 1, true);
+                    ++count;
                 }
             }
+            tilesLogic.set(x * board.getSize() + y, Integer.valueOf(count));
         }
     }
 
@@ -128,15 +133,18 @@ public class Sudoku {
         if (board.getTileValue(x, y) == 0) {
             int tempX, tempY;
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+            int count = 0;
             tempX = (x / board.getBoxWidth()) * board.getBoxWidth();
             tempY = (y / board.getBoxHeight()) * board.getBoxHeight();
             for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
                 for (int j = tempX; j < tempY + board.getBoxHeight(); ++j) {
                     if (board.getTileValue(i, j) == 0) {
                         tilesPossibilities.set(posInPossibilities + board.getTileValue(i, j) - 1, true);
+                        ++count;
                     }
                 }
             }
+            tilesLogic.set(x * board.getSize() + y, Integer.valueOf(count));
         }
     }
 

@@ -1,16 +1,18 @@
 package com.project;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Sudoku {
     private Board board;
     private ArrayList<Integer> tilesLogic;
     private ArrayList<Boolean> tilesPossibilities;
-    private ArrayList<Board> sudokusToCome;
+    private Deque<Board> sudokusToCome;
 
     public Sudoku(Board board) {
         this.board = board;
-        sudokusToCome = new ArrayList<>();
+        sudokusToCome = new LinkedList<>();
         tilesLogic = new ArrayList<>(board.getSize() * board.getSize());
         tilesPossibilities = new ArrayList<>(board.getSize() * board.getSize() * board.getSize());
         for (int i = 0; i < tilesPossibilities.size(); ++i) {
@@ -26,38 +28,42 @@ public class Sudoku {
             updateLogic();
             if (isSolvable()) {
                 int currentIndex = findSmallest();
-
-                int x = currentIndex / board.getSize();
-                int y = currentIndex - x * board.getSize();
+                int size = board.getSize();
+                int x = currentIndex / size;
+                int y = currentIndex - x * size;
                 if (tilesLogic.get(currentIndex) == 1) {
                     board.setTileValue(x, y, fetchNumber(x, y));
-                }
-                else if (tilesLogic.get(currentIndex) > 1) {
-                    int j = 0;
-                    for (int i = 1; i < tilesLogic.get(currentIndex); ++i) {
-                        for (; j < board.getSize(); ++j) {
-                            if (tilesPossibilities
-                                    .get(x * board.getSize() * board.getSize() + y * board.getSize() + j) == true) {
-                                Board tempBoard = this.board;
-                                tempBoard.setTileValue(x, y, j + 1);
-                                sudokusToCome.add(tempBoard);
-                                ++j;
-                                break;
-                            }
-                        }
-                    }
-                    for (; j < board.getSize(); ++j) {
-                        if (tilesPossibilities
-                                .get(x * board.getSize() * board.getSize() + y * board.getSize() + j) == true) {
-                            board.setTileValue(x, y, j + 1);
-                            break;
-                        }
-                    }
+                } else if (tilesLogic.get(currentIndex) > 1) {
+                    addSudokuOntoStack(x, y, currentIndex, size);
                 }
             } else {
                 if (!sudokusToCome.isEmpty()) {
-                    board = sudokusToCome.remove(sudokusToCome.size() - 1);
+                    board = sudokusToCome.removeLast();
+                } else {
+                    return;
                 }
+            }
+        }
+    }
+
+    private void addSudokuOntoStack(int x, int y, int currentIndex, int size) {
+        int doubleSize = size * size;
+        int j = 0;
+        for (int i = 1; i < tilesLogic.get(currentIndex); ++i) {
+            for (; j < size; ++j) {
+                if (Boolean.TRUE.equals(tilesPossibilities.get(x * doubleSize + y * size + j))) {
+                    Board tempBoard = this.board;
+                    tempBoard.setTileValue(x, y, j + 1);
+                    sudokusToCome.add(tempBoard);
+                    ++j;
+                    break;
+                }
+            }
+        }
+        for (; j < size; ++j) {
+            if (Boolean.TRUE.equals(tilesPossibilities.get(x * doubleSize + y * size + j))) {
+                board.setTileValue(x, y, j + 1);
+                break;
             }
         }
     }
@@ -65,10 +71,8 @@ public class Sudoku {
     private boolean isSolvable() {
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
-                if (board.getTileValue(i, j) == 0) {
-                    if (tilesLogic.get(i * board.getSize() + j) == 0) {
-                        return false;
-                    }
+                if (board.getTileValue(i, j) == 0 && tilesLogic.get(i * board.getSize() + j) == 0) {
+                    return false;
                 }
             }
         }
@@ -76,17 +80,17 @@ public class Sudoku {
     }
 
     private void updateLogic() {
-        FilledUpdate();
+        filledUpdate();
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
-                RowLogic(i, j);
-                ColumnLogic(i, j);
-                BoxLogic(i, j);
+                rowLogic(i, j);
+                columnLogic(i, j);
+                boxLogic(i, j);
             }
         }
     }
 
-    private void FilledUpdate() {
+    private void filledUpdate() {
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
                 if (board.getTileValue(i, j) != 0) {
@@ -100,7 +104,7 @@ public class Sudoku {
         }
     }
 
-    private void RowLogic(int x, int y) {
+    private void rowLogic(int x, int y) {
         // if it needs refreshing breeze through line
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
@@ -115,7 +119,7 @@ public class Sudoku {
         }
     }
 
-    private void ColumnLogic(int x, int y) {
+    private void columnLogic(int x, int y) {
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
             int count = 0;
@@ -129,9 +133,10 @@ public class Sudoku {
         }
     }
 
-    private void BoxLogic(int x, int y) {
+    private void boxLogic(int x, int y) {
         if (board.getTileValue(x, y) == 0) {
-            int tempX, tempY;
+            int tempX;
+            int tempY;
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
             int count = 0;
             tempX = (x / board.getBoxWidth()) * board.getBoxWidth();
@@ -165,7 +170,8 @@ public class Sudoku {
 
     private int fetchNumber(int x, int y) {
         for (int i = 0; i < board.getSize(); ++i) {
-            if (tilesPossibilities.get(x * board.getSize() * board.getSize() + y * board.getSize() + i)) {
+            Boolean condition = tilesPossibilities.get(x * board.getSize() * board.getSize() + y * board.getSize() + i);
+            if (Boolean.TRUE.equals(condition)) {
                 return i + 1;
             }
         }

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Board {
-  private static Logger log = LoggerFactory.getLogger(Sudoku.class);
+  private static Logger log = LoggerFactory.getLogger(Board.class);
 
   private List<Integer> tilesValue;
 
@@ -61,7 +61,7 @@ public class Board {
     double testSize = Math.sqrt(nums.size());
 
     if (!((testSize == Math.floor(testSize)) && !Double.isInfinite(testSize))) {
-      log.info("Sudoku size has to be square value, size = " + testSize);
+      log.info("Sudoku size has to be square value, size = {}", testSize);
       throw new InvalidSudokuSize();
     }
     int arrSize = (int) testSize;
@@ -75,14 +75,14 @@ public class Board {
       tilesValue.add(0);
     }
     
-    log.debug("Before trans: " + tilesValue.toString());
+    log.debug("Before trans: {}", tilesValue);
     // Transform cols into rows
     for (int i = 0; i < arrSize; ++i) {
       for (int j = 0; j < arrSize; ++j) {
         tilesValue.set(i * arrSize + j, Integer.parseInt(nums.get(i + j * arrSize)));
       }
     }
-    log.debug("After trans: " + tilesValue.toString());
+    log.debug("After trans: {}", tilesValue);
   }
 
   // Data have to be colleded by rows

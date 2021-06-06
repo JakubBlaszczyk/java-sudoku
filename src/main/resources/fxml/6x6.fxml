@@ -20,14 +20,14 @@
               <menus>
                 <Menu mnemonicParsing="false" text="New Sudoku">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="6x6" />
-                        <MenuItem mnemonicParsing="false" text="8x8" />
-                        <MenuItem mnemonicParsing="false" text="9x9" />
-                        <MenuItem mnemonicParsing="false" text="10x10" />
-                        <MenuItem mnemonicParsing="false" text="12x12" />
+                    <MenuItem fx:id="Load6x6" mnemonicParsing="false" text="6x6" />
+                        <MenuItem fx:id="Load8x8" mnemonicParsing="false" text="8x8" />
+                        <MenuItem fx:id="Load9x9" mnemonicParsing="false" text="9x9" />
+                        <MenuItem fx:id="Load10x10" mnemonicParsing="false" text="10x10" />
+                        <MenuItem fx:id="Load12x12" mnemonicParsing="false" text="12x12" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Save to file" />
+                <Menu fx:id="SaveButton" mnemonicParsing="false" text="Save to file" />
               </menus>
             </MenuBar>
          </children>
@@ -56,26 +56,201 @@
                <children>
                   <Pane layoutX="148.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;">
                      <children>
-                        <Button fx:id="Button00" layoutX="75.0" layoutY="24.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                        <Button fx:id="Button00" layoutX="94.0" layoutY="28.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="Button01" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2">
+                     <children>
+                        <Button fx:id="Button02" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3">
+                     <children>
+                        <Button fx:id="Button03" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4">
+                     <children>
+                        <Button fx:id="Button04" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5">
+                     <children>
+                        <Button fx:id="Button05" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button1" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button11" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button12" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button13" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button14" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="Button15" layoutX="93.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="90.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button20" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button21" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button22" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button23" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button24" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="Button25" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="147.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button3" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="215.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button40" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="283.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button50" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="250.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button31" layoutX="94.0" layoutY="27.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="250.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button32" layoutX="94.0" layoutY="27.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="250.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button33" layoutX="93.0" layoutY="27.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="250.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button34" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="250.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="Button35" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="329.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button41" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="329.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button42" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="329.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button43" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="329.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button44" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="329.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="Button45" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="408.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button51" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="408.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button52" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="408.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button53" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="408.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button54" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="408.0" prefHeight="77.0" prefWidth="133.0" style="-fx-border-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                     <children>
+                        <Button fx:id="Button55" layoutX="94.0" layoutY="22.0" mnemonicParsing="false" onAction="#ChangeValue" text="0" />
                      </children>
                   </Pane>
                </children>
             </GridPane>
             <MenuBar nodeOrientation="LEFT_TO_RIGHT">
               <menus>
-                <Menu mnemonicParsing="false" text="Check" />
-                <Menu mnemonicParsing="false" text="Hint" />
-                <Menu mnemonicParsing="false" text="Solve" />
+                <Menu fx:id="CheckButton" mnemonicParsing="false" text="Check" />
+                <Menu fx:id="HintButton" mnemonicParsing="false" text="Hint" />
+                <Menu fx:id="SolveButton" mnemonicParsing="false" text="Solve" />
               </menus>
             </MenuBar>
             <HBox layoutX="630.0" layoutY="25.0" prefHeight="18.0" prefWidth="287.0">
                <children>
                 <Button fx:id="Set1" mnemonicParsing="false" onAction="#SetValue1" text="1" />
-                  <Button mnemonicParsing="false" text="2" />
-                  <Button mnemonicParsing="false" text="3" />
-                  <Button mnemonicParsing="false" text="4" />
-                  <Button mnemonicParsing="false" text="5" />
-                  <Button mnemonicParsing="false" text="6" />
+                  <Button fx:id="Set2" mnemonicParsing="false" text="2" />
+                  <Button fx:id="Set3" mnemonicParsing="false" text="3" />
+                  <Button fx:id="Set4" mnemonicParsing="false" text="4" />
+                  <Button fx:id="Set5" mnemonicParsing="false" text="5" />
+                  <Button fx:id="Set6" mnemonicParsing="false" text="6" />
                </children>
             </HBox>
          </children>

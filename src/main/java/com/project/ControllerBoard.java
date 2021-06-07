@@ -1,7 +1,9 @@
 package com.project;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -36,11 +38,24 @@ public class ControllerBoard {
   BackgroundFill white = new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
   Stage mainStage = null;
   Stage currentStage = null;
+  List<Button> allButtons = null;
+
+  @FXML
+  public void initialize() {
+    allButtons = new ArrayList<>();
+    for (Node node : sudokuBoard.getChildren()) {
+      if (!(node instanceof Pane)) {
+        throw new IllegalArgumentException("Missing Pane in pane grid!");
+      }
+      allButtons.add((Button) (((Pane) node).getChildren().get(0)));
+    }
+  }
 
   @FXML
   private GridPane sudokuBoard;
   @FXML
   private HBox setButtons;
+
   // TODO change title or some kind of label inside window?
   private void startTimer() {
     Date start = Calendar.getInstance().getTime();
@@ -63,11 +78,7 @@ public class ControllerBoard {
       }
     };
 
-    for (Node node : sudokuBoard.getChildren()) {
-      if (!(node instanceof Pane)) {
-        throw new IllegalArgumentException("Missing Pane in pane grid!");
-      }
-      Button button = (Button) (((Pane) node).getChildren().get(0));
+    for (Button button : allButtons) {
       button.setOnAction(handler);
     }
   }
@@ -75,11 +86,7 @@ public class ControllerBoard {
   private void setupNumberButtons() {
     EventHandler<MouseEvent> handler = ev -> {
       int clicked = 0;
-      for (Node node : sudokuBoard.getChildren()) {
-        if (!(node instanceof Pane)) {
-          throw new IllegalArgumentException("Missing Pane in pane grid!");
-        }
-        Button button = (Button) (((Pane) node).getChildren().get(0));
+      for (Button button : allButtons) {
         if (button.getBackground().equals(new Background(red))) {
           ++clicked;
           button.setText(((Button) ev.getSource()).getText());

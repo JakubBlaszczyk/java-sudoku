@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -27,12 +28,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Controller {
-  private static Logger log = LoggerFactory.getLogger(Controller.class);
+public class ControllerBoard {
+  private static Logger log = LoggerFactory.getLogger(ControllerBoard.class);
 
   BackgroundFill red = new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
   BackgroundFill white = new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
-  Stage stage = null;
+  Stage mainStage = null;
+  Stage currentStage = null;
 
   @FXML
   private GridPane sudokuBoard;
@@ -43,7 +45,7 @@ public class Controller {
     Date start = Calendar.getInstance().getTime();
     Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
       long countUp = Calendar.getInstance().getTime().getTime() - start.getTime();
-      stage.setTitle("Sudoku - Time: " + TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS));
+      currentStage.setTitle("Sudoku - Time: " + TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS));
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
@@ -84,6 +86,7 @@ public class Controller {
       }
       if (clicked == 0) {
         // TODO add popup
+        new Alert(Alert.AlertType.INFORMATION, "Select fields that you want change").show();
       }
     };
 
@@ -95,8 +98,9 @@ public class Controller {
     }
   }
 
-  public void startup(Stage stage) {
-    this.stage = stage;
+  public void startup(Stage mainStage, Stage currentStage) {
+    this.mainStage = mainStage;
+    this.currentStage = currentStage;
     setupSudokuButtons();
     setupNumberButtons();
     startTimer();

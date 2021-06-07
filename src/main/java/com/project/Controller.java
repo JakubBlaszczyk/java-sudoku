@@ -1,8 +1,15 @@
 package com.project;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,25 +24,29 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Controller {
-  @FXML
-  private Button Button00; // Id 00,01,02...-55
+  private static Logger log = LoggerFactory.getLogger(Controller.class);
 
   BackgroundFill red = new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
   BackgroundFill white = new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
-  Object lastClickedButton = null;
+  Stage stage = null;
 
   @FXML
   private GridPane sudokuBoard;
   @FXML
   private HBox setButtons;
 
-  @FXML
-  public void initialize() {
-    // setup
-    setupSudokuButtons();
-    setupNumberButtons();
+  private void startTimer() {
+    Date start = Calendar.getInstance().getTime();
+    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+      long countUp = Calendar.getInstance().getTime().getTime() - start.getTime();
+      stage.setTitle("Sudoku - Time: " + TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS));
+    }));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
   }
 
   private void setupSudokuButtons() {
@@ -84,29 +95,10 @@ public class Controller {
     }
   }
 
-  public void setSudokuButtonValue(ActionEvent ev) {
-    Button button = ((Button) ev.getSource());
-    if (button.getBackground().equals(new Background(red))) {
-      button.setBackground(new Background(white));
-    } else {
-      button.setBackground(new Background(red));
-    }
-  }
-
-  public void onClickSudokuNumber(MouseEvent ev) {
-    int clicked = 0;
-    for (Node node : sudokuBoard.getChildren()) {
-      if (!(node instanceof Pane)) {
-        throw new IllegalArgumentException("Missing Pane in pane grid!");
-      }
-      Button button = (Button) (((Pane) node).getChildren().get(0));
-      if (button.getBackground().equals(new Background(red))) {
-        ++clicked;
-        button.setText(((Button) ev.getSource()).getText());
-      }
-    }
-    if (clicked == 0) {
-      // TODO add popup
-    }
+  public void startup(Stage stage) {
+    this.stage = stage;
+    setupSudokuButtons();
+    setupNumberButtons();
+    startTimer();
   }
 }

@@ -40,11 +40,12 @@ public class ControllerBoard {
   private GridPane sudokuBoard;
   @FXML
   private HBox setButtons;
-
+  // TODO change title or some kind of label inside window?
   private void startTimer() {
     Date start = Calendar.getInstance().getTime();
     Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
       long countUp = Calendar.getInstance().getTime().getTime() - start.getTime();
+      // TODO add better title?
       currentStage.setTitle("Sudoku - Time: " + TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS));
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -85,7 +86,6 @@ public class ControllerBoard {
         }
       }
       if (clicked == 0) {
-        // TODO add popup
         new Alert(Alert.AlertType.INFORMATION, "Select fields that you want change").show();
       }
     };

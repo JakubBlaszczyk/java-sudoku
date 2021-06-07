@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class ControllerBoard {
@@ -104,5 +105,16 @@ public class ControllerBoard {
     setupSudokuButtons();
     setupNumberButtons();
     startTimer();
+    Window wnd = currentStage.getScene().getWindow();
+    if (wnd == null) {
+      log.error("Window is null");
+      throw new NullPointerException();
+    }
+    // TODO Some popup to prevent?
+    wnd.setOnCloseRequest(ev -> {
+      ev.consume();
+      currentStage.hide();
+      mainStage.show();
+    });
   }
 }

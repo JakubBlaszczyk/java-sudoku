@@ -5,36 +5,34 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 public class Sudoku {
-    private Board board;
-    private ArrayList<Integer> tilesLogic;
-    private ArrayList<Boolean> tilesPossibilities;
-    private Deque<Board> sudokusToCome;
 
-    public Sudoku(Board board) {
-        this.board = board;
+    private Sudoku() {
+    }
+
+    public static void solve(Board board) {
+        ArrayList<Integer> tilesLogic;
+        ArrayList<Boolean> tilesPossibilities;
+        Deque<Board> sudokusToCome;
+        int size = board.getSize();
         sudokusToCome = new LinkedList<>();
-        tilesLogic = new ArrayList<>(board.getSize() * board.getSize());
-        tilesPossibilities = new ArrayList<>(board.getSize() * board.getSize() * board.getSize());
+        tilesLogic = new ArrayList<>(size * size);
+        tilesPossibilities = new ArrayList<>(size * size * size);
         for (int i = 0; i < tilesPossibilities.size(); ++i) {
             tilesPossibilities.set(i, true);
         }
         for (int i = 0; i < tilesLogic.size(); ++i) {
-            tilesLogic.set(i, board.getSize());
+            tilesLogic.set(i, size);
         }
-    }
-
-    public void solve() {
         while (true) {
-            updateLogic();
-            if (isSolvable()) {
-                int currentIndex = findSmallest();
-                int size = board.getSize();
+            updateLogic(board, tilesLogic, tilesPossibilities);
+            if (isSolvable(board, tilesLogic)) {
+                int currentIndex = findSmallest(board, tilesLogic);
                 int x = currentIndex / size;
                 int y = currentIndex - x * size;
                 if (tilesLogic.get(currentIndex) == 1) {
-                    board.setTileValue(x, y, fetchNumber(x, y));
+                    board.setTileValue(x, y, fetchNumber(board, tilesPossibilities, x, y));
                 } else if (tilesLogic.get(currentIndex) > 1) {
-                    addSudokuOntoStack(x, y, currentIndex, size);
+                    addSudokuOntoStack(board, tilesLogic, tilesPossibilities, sudokusToCome, x, y, currentIndex);
                 }
             } else {
                 if (!sudokusToCome.isEmpty()) {
@@ -46,13 +44,15 @@ public class Sudoku {
         }
     }
 
-    private void addSudokuOntoStack(int x, int y, int currentIndex, int size) {
+    private static void addSudokuOntoStack(Board board, ArrayList<Integer> tilesLogic,
+            ArrayList<Boolean> tilesPossibilities, Deque<Board> sudokusToCome, int x, int y, int currentIndex) {
+        int size = board.getSize();
         int doubleSize = size * size;
         int j = 0;
         for (int i = 1; i < tilesLogic.get(currentIndex); ++i) {
             for (; j < size; ++j) {
                 if (Boolean.TRUE.equals(tilesPossibilities.get(x * doubleSize + y * size + j))) {
-                    Board tempBoard = this.board;
+                    Board tempBoard = board;
                     tempBoard.setTileValue(x, y, j + 1);
                     sudokusToCome.add(tempBoard);
                     ++j;
@@ -68,7 +68,7 @@ public class Sudoku {
         }
     }
 
-    private boolean isSolvable() {
+    private static boolean isSolvable(Board board, ArrayList<Integer> tilesLogic) {
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
                 if (board.getTileValue(i, j) == 0 && tilesLogic.get(i * board.getSize() + j) == 0) {
@@ -79,18 +79,19 @@ public class Sudoku {
         return true;
     }
 
-    private void updateLogic() {
-        filledUpdate();
+    private static void updateLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities) {
+        filledUpdate(board, tilesLogic, tilesPossibilities);
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
-                rowLogic(i, j);
-                columnLogic(i, j);
-                boxLogic(i, j);
+                rowLogic(board, tilesLogic, tilesPossibilities, i, j);
+                columnLogic(board, tilesLogic, tilesPossibilities, i, j);
+                boxLogic(board, tilesLogic, tilesPossibilities, i, j);
             }
         }
     }
 
-    private void filledUpdate() {
+    private static void filledUpdate(Board board, ArrayList<Integer> tilesLogic,
+            ArrayList<Boolean> tilesPossibilities) {
         for (int i = 0; i < board.getSize(); ++i) {
             for (int j = 0; j < board.getSize(); ++j) {
                 if (board.getTileValue(i, j) != 0) {
@@ -104,7 +105,8 @@ public class Sudoku {
         }
     }
 
-    private void rowLogic(int x, int y) {
+    private static void rowLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
+            int x, int y) {
         // if it needs refreshing breeze through line
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
@@ -119,7 +121,8 @@ public class Sudoku {
         }
     }
 
-    private void columnLogic(int x, int y) {
+    private static void columnLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
+            int x, int y) {
         if (board.getTileValue(x, y) == 0) {
             int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
             int count = 0;
@@ -133,7 +136,8 @@ public class Sudoku {
         }
     }
 
-    private void boxLogic(int x, int y) {
+    private static void boxLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
+            int x, int y) {
         if (board.getTileValue(x, y) == 0) {
             int tempX;
             int tempY;
@@ -153,7 +157,7 @@ public class Sudoku {
         }
     }
 
-    private int findSmallest() {
+    private static int findSmallest(Board board, ArrayList<Integer> tilesLogic) {
         int smallest = board.getSize() + 1;
         int index = -1;
         for (int i = 0; i < board.getSize(); ++i) {
@@ -168,7 +172,7 @@ public class Sudoku {
         return index;
     }
 
-    private int fetchNumber(int x, int y) {
+    private static int fetchNumber(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
         for (int i = 0; i < board.getSize(); ++i) {
             Boolean condition = tilesPossibilities.get(x * board.getSize() * board.getSize() + y * board.getSize() + i);
             if (Boolean.TRUE.equals(condition)) {

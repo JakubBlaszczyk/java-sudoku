@@ -1,5 +1,6 @@
 package com.project;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -10,11 +11,16 @@ public class Sudoku {
     }
 
     public static void solve(Board board) {
+        Deque<Board> sudokusToCome = new LinkedList<>();
+        if (fillOneBoard(board, sudokusToCome)) {
+            throw new NoSuchFieldError();
+        }
+    }
+
+    private static boolean fillOneBoard(Board board, Deque<Board> sudokusToCome) {
         ArrayList<Integer> tilesLogic;
         ArrayList<Boolean> tilesPossibilities;
-        Deque<Board> sudokusToCome;
         int size = board.getSize();
-        sudokusToCome = new LinkedList<>();
         tilesLogic = new ArrayList<>(size * size);
         tilesPossibilities = new ArrayList<>(size * size * size);
         for (int i = 0; i < tilesPossibilities.size(); ++i) {
@@ -26,22 +32,34 @@ public class Sudoku {
         while (true) {
             updateLogic(board, tilesLogic, tilesPossibilities);
             if (isSolvable(board, tilesLogic)) {
-                int currentIndex = findSmallest(board, tilesLogic);
-                int x = currentIndex / size;
-                int y = currentIndex - x * size;
-                if (tilesLogic.get(currentIndex) == 1) {
-                    board.setTileValue(x, y, fetchNumber(board, tilesPossibilities, x, y));
-                } else if (tilesLogic.get(currentIndex) > 1) {
-                    addSudokuOntoStack(board, tilesLogic, tilesPossibilities, sudokusToCome, x, y, currentIndex);
-                }
+                solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
             } else {
                 if (!sudokusToCome.isEmpty()) {
+                    if (isSolved(board)) {
+                        return true;
+                    }
                     board = sudokusToCome.removeLast();
                 } else {
-                    return;
+                    return false;
                 }
             }
         }
+    }
+
+    private static Tuple solveTick(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
+            Deque<Board> sudokusToCome) {
+        int currentIndex = findSmallest(board, tilesLogic);
+        int x = currentIndex / board.getSize();
+        int y = currentIndex - x * board.getSize();
+        if (tilesLogic.get(currentIndex) == 1) {
+            Tuple temp = new Tuple(x,y,fetchNumber(board, tilesPossibilities, x, y));
+            board.setTileValue(x, y, temp.value);
+            return temp;
+        } else if (tilesLogic.get(currentIndex) > 1) {
+            addSudokuOntoStack(board, tilesLogic, tilesPossibilities, sudokusToCome, x, y, currentIndex);
+            return null;
+        }
+        throw new InvalidParameterException("Shouldn't be here");
     }
 
     private static void addSudokuOntoStack(Board board, ArrayList<Integer> tilesLogic,
@@ -66,6 +84,17 @@ public class Sudoku {
                 break;
             }
         }
+    }
+
+    private static boolean isSolved(Board board) {
+        for (int i = 0; i < board.getSize(); ++i) {
+            for (int j = 0; j < board.getSize(); ++j) {
+                if (board.getTileValue(i, j) == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private static boolean isSolvable(Board board, ArrayList<Integer> tilesLogic) {
@@ -180,5 +209,59 @@ public class Sudoku {
             }
         }
         return 0;
+    }
+
+    public static Tuple hint(Board in) {
+        Deque<Board> sudokusToCome = new LinkedList<>();
+        ArrayList<Integer> tilesLogic;
+        ArrayList<Boolean> tilesPossibilities;
+        Board board = in;
+        int size = board.getSize();
+        tilesLogic = new ArrayList<>(size * size);
+        tilesPossibilities = new ArrayList<>(size * size * size);
+        for (int i = 0; i < tilesPossibilities.size(); ++i) {
+            tilesPossibilities.set(i, true);
+        }
+        for (int i = 0; i < tilesLogic.size(); ++i) {
+            tilesLogic.set(i, size);
+        }
+        while (true) {
+            updateLogic(board, tilesLogic, tilesPossibilities);
+            if (isSolvable(board, tilesLogic)) {
+                return solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
+            } else {
+                if (!sudokusToCome.isEmpty()) {
+                    if (isSolved(board)) {
+                        return new Tuple(-1,-1,-1);
+                    }
+                    board = sudokusToCome.removeLast();
+                } else {
+                    throw new InvalidParameterException();
+                }
+            }
+        }
+    }
+
+    // this method checks if this Board has an solution
+    // if even one solution exists, will return true
+    public static Boolean check(Board in) {
+        Deque<Board> sudokusToCome = new LinkedList<>();
+        Deque<Board> correctSudokus = new LinkedList<>();
+        Board board = in;
+        if (!fillOneBoard(board, sudokusToCome)) {
+            throw new NoSuchFieldError();
+        }
+        correctSudokus.push(board);
+        Board temp = sudokusToCome.removeLast();
+        while (fillOneBoard(temp, sudokusToCome)) {
+            correctSudokus.push(temp);
+            temp = sudokusToCome.removeLast();
+        }
+        for (Board one : correctSudokus) {
+            if (one == in) {
+                return true;
+            }
+        }
+        return false;
     }
 }

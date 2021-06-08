@@ -482,7 +482,7 @@
                   <Button fx:id="Set4" mnemonicParsing="false" text="4" />
                   <Button fx:id="Set5" mnemonicParsing="false" text="5" />
                   <Button fx:id="Set6" mnemonicParsing="false" text="6" />
-                  <Button fx:id="Set7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetValue" text="7" />
+                  <Button fx:id="Set7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetValue1" text="7" />
                   <Button fx:id="Set8" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetValue1" text="8" />
                   <Button fx:id="Set9" layoutX="171.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetValue1" text="9" />
                </children>

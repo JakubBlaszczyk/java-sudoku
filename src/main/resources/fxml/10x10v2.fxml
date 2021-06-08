@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="435.0" maxWidth="315.0" minHeight="435.0" minWidth="315.0" prefHeight="435.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="sudokuBoard" layoutX="5.0" layoutY="105.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+          <ColumnConstraints hgrow="NEVER" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="64.0" minHeight="60.0" prefHeight="61.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="5.0" minHeight="1.0" prefHeight="4.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="Button2" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button11" layoutX="70.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button12" layoutX="70.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button21" layoutX="100.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button22" layoutX="100.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button31" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button32" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button41" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button42" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button fx:id="Button1" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="11.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.rowIndex="2">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button3" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button4" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button13" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button14" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button23" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button24" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button33" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button34" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button43" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button44" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="75.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.rowIndex="4">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button5" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button6" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button15" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button16" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button25" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button26" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button35" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button36" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button45" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button46" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="140.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.rowIndex="6">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button7" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button8" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button17" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button18" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button27" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button28" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button37" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button38" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button47" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button48" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="205.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.rowIndex="8">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button9" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button10" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button19" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button20" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button29" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button30" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button39" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button40" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button49" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button50" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="140.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.columnIndex="2">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button51" layoutX="40.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button52" layoutX="40.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button61" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button62" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button71" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button72" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button81" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button82" layoutX="130.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button91" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button92" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="165.0" layoutY="11.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button53" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button54" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button63" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button64" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button73" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button74" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button83" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button84" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button93" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button94" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="165.0" layoutY="75.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button55" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button56" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button65" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button66" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button75" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button76" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button85" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button86" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button95" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button96" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="165.0" layoutY="140.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button57" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button58" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button67" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button68" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button77" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button78" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button87" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button88" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button97" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+                  <Button fx:id="Button98" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="11.0" maxHeight="60.0" maxWidth="150.0" minHeight="60.0" minWidth="150.0" prefHeight="60.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="Button59" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
+                  <Button fx:id="Button60" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
+                  <Button fx:id="Button69" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button70" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button79" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
+                  <Button fx:id="Button80" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="Button89" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />
+                  <Button fx:id="Button90" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="Button100" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button fx:id="Button99" layoutX="130.0" layoutY="40.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+      <HBox fx:id="setButtons" layoutX="5.0" layoutY="65.0" maxHeight="30.0" maxWidth="309.0" minHeight="30.0" minWidth="309.0" prefHeight="30.0" prefWidth="309.0">
+         <children>
+            <Button fx:id="Set1" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="1" />
+            <Button fx:id="Set2" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="2" translateX="1.0" />
+            <Button fx:id="Set3" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="3" translateX="2.0" />
+            <Button fx:id="Set3" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="4" translateX="3.0" />
+            <Button fx:id="Set5" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="5" translateX="4.0" />
+            <Button fx:id="Set6" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="6" translateX="5.0" />
+            <Button fx:id="Set7" layoutX="160.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="7" translateX="6.0" />
+            <Button fx:id="Set8" layoutX="190.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="8" translateX="7.0" />
+            <Button fx:id="Set9" layoutX="220.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="9" translateX="8.0" />
+            <Button fx:id="Set10" layoutX="220.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="10" translateX="9.0" />
+         </children>
+      </HBox>
+      <MenuBar fx:id="functionBar" layoutX="5.0" layoutY="2.0" prefHeight="25.0" prefWidth="185.0">
+         <menus>
+            <Menu fx:id="functionBar" mnemonicParsing="false" text="New sudoku">
+               <items>
+                  <MenuItem fx:id="loadFromFile" mnemonicParsing="false" text="Load from file" />
+                  <MenuItem fx:id="Load6x6" mnemonicParsing="false" text="6x6" />
+                  <MenuItem fx:id="Load8x8" mnemonicParsing="false" text="8x8" />
+                  <MenuItem fx:id="Load9x9" mnemonicParsing="false" text="9x9" />
+                  <MenuItem fx:id="Load10x10" mnemonicParsing="false" text="10x10" />
+                  <MenuItem fx:id="Load12x12" mnemonicParsing="false" text="12x12" />
+               </items>
+            </Menu>
+            <Menu fx:id="SaveButton" mnemonicParsing="false" text="Save to file" />
+         </menus>
+      </MenuBar>
+      <HBox layoutX="5.0" layoutY="30.0" maxHeight="30.0" maxWidth="185.0" minHeight="30.0" minWidth="185.0" prefHeight="30.0" prefWidth="185.0">
+         <children>
+            <Button fx:id="CheckButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Check" />
+            <Button fx:id="HintButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Hint" translateX="2.0" />
+            <Button fx:id="SolveButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Solve" translateX="4.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

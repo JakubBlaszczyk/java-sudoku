@@ -18,6 +18,11 @@ public class App extends Application {
     ControllerMainWindow cMainWindow = loader.getController();
     cMainWindow.setStage(stage);
     stage.setTitle("Baza here");
+    loader.setLocation(getClass().getResource("/fxml/12x12.fxml"));
+    Parent root = loader.load();
+    Scene scene = new Scene(root, 1280, 800);
+    stage.setResizable(false);
+    stage.setTitle("FXML Welcome");
     stage.setScene(scene);
     stage.show();
   }

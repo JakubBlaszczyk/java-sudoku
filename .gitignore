@@ -26,3 +26,9 @@ buildNumber.properties
 .factorypath
 .project
 .vscode/
+src/main/resources/fxml/6x6.fxml
+src/main/java/com/project/App.java
+src/main/java/com/project/Controller.java
+src/main/resources/fxml/12x12.fxml
+src/main/resources/fxml/6x6.fxml
+src/main/resources/fxml/9x9.fxml

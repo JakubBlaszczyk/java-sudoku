@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import com.project.exceptions.SudokuSolved;
+
 public class Sudoku {
 
     private Sudoku() {
@@ -211,7 +213,7 @@ public class Sudoku {
         return 0;
     }
 
-    public static Tuple hint(Board in) {
+    public static Tuple hint(Board in) throws SudokuSolved {
         Deque<Board> sudokusToCome = new LinkedList<>();
         ArrayList<Integer> tilesLogic;
         ArrayList<Boolean> tilesPossibilities;
@@ -232,7 +234,7 @@ public class Sudoku {
             } else {
                 if (!sudokusToCome.isEmpty()) {
                     if (isSolved(board)) {
-                        return new Tuple(-1,-1,-1);
+                        throw new SudokuSolved();
                     }
                     board = sudokusToCome.removeLast();
                 } else {

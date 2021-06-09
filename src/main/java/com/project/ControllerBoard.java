@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.naming.MalformedLinkException;
 
+import com.project.boards.Board10x10;
+import com.project.boards.Board12x12;
+import com.project.boards.Board6x6;
+import com.project.boards.Board8x8;
+import com.project.boards.Board9x9;
 import com.project.exceptions.InvalidSudokuData;
 import com.project.exceptions.InvalidSudokuSize;
 import com.project.exceptions.SudokuAlreadySolved;
@@ -54,7 +59,8 @@ public class ControllerBoard {
   private static Logger log = LoggerFactory.getLogger(ControllerBoard.class);
 
   Background red = new Background(new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
-  Background white = new Background(new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
+  Background white = new Background(
+      new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
   Stage mainStage = null;
   Stage currentStage = null;
   List<Button> allButtons = null;
@@ -80,7 +86,6 @@ public class ControllerBoard {
     allButtons.sort((object1, object2) -> getIdValue(object1.getId()).compareTo(getIdValue(object2.getId())));
     for (Button button : allButtons) {
       log.info(button.getId());
-      button.setText("50");
     }
   }
 
@@ -138,8 +143,9 @@ public class ControllerBoard {
     }
   }
 
-  public void startup(Stage mainStage, Stage currentStage) {
+  public void startup(Stage mainStage, Stage currentStage, Board board) {
     log.info("Startup");
+    this.board = board;
     this.mainStage = mainStage;
     this.currentStage = currentStage;
     setupSudokuButtons();
@@ -156,15 +162,12 @@ public class ControllerBoard {
       currentStage.hide();
       mainStage.show();
     });
-  }
-
-  public void startup(Stage mainStage, Stage currentStage, List<Integer> defaultVals) {
-    log.info("Extended startup");
-    startup(mainStage, currentStage);
-    for (int i = 0; i < allButtons.size(); ++i) {
-      allButtons.get(i).setText(String.valueOf(defaultVals.get(i)));      
+    if (allButtons.size() == board.getTilesValue().size()) {
+      for (int i = 0; i < allButtons.size(); ++i) {
+        allButtons.get(i).setText(String.valueOf(board.getTilesValue().get(i)));
+      }
     }
-    //test
+    // test
     log.info("TEST");
     for (Button button : allButtons) {
       log.info(button.getText());
@@ -176,12 +179,14 @@ public class ControllerBoard {
     Stage stage;
     Parent root;
     FXMLLoader loader;
+    Board newBoard;
     MenuItem mItem = (MenuItem) ev.getSource();
     try {
       switch (mItem.getId()) {
         case "Load6x6": {
           log.debug("Loading 6x6");
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
+          newBoard = new Board6x6(new ArrayList<>());
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP6 - Czas 0");
@@ -190,6 +195,7 @@ public class ControllerBoard {
         case "Load8x8": {
           log.debug("Loading 8x8");
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
+          newBoard = new Board8x8(new ArrayList<>());
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP8 - Czas 0");
@@ -198,6 +204,7 @@ public class ControllerBoard {
         case "Load9x9": {
           log.debug("Loading 9x9");
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
+          newBoard = new Board9x9(new ArrayList<>());
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP9 - Czas 0");
@@ -206,6 +213,7 @@ public class ControllerBoard {
         case "Load10x10": {
           log.debug("Loading 10x10");
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
+          newBoard = new Board10x10(new ArrayList<>());
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP10 - Czas 0");
@@ -214,6 +222,7 @@ public class ControllerBoard {
         case "Load12x12": {
           log.debug("Loading 12x12");
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
+          newBoard = new Board12x12(new ArrayList<>());
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP12 - Czas 0");
@@ -225,7 +234,7 @@ public class ControllerBoard {
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
-      cBoard.startup(mainStage, stage);
+      cBoard.startup(mainStage, stage, newBoard);
       currentStage.close();
       stage.show();
     } catch (Exception e) {
@@ -297,7 +306,7 @@ public class ControllerBoard {
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
-      cBoard.startup(mainStage, stage, vals);
+      cBoard.startup(mainStage, stage, board);
       mainStage.close();
       currentStage.close();
       stage.show();
@@ -306,44 +315,58 @@ public class ControllerBoard {
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (InvalidSudokuData e) {
-      throw  new RuntimeException(e);
+      throw new RuntimeException(e);
     } catch (InvalidSudokuSize e) {
-      throw  new RuntimeException(e);
+      throw new RuntimeException(e);
     }
   }
 
   private void updateBoard() {
     List<Integer> boardValues = board.getTilesValue();
     for (int i = 0; i < allButtons.size(); ++i) {
-      boardValues.set(i, Integer.valueOf(allButtons.get(i).getId()));
+      boardValues.set(i, Integer.valueOf(allButtons.get(i).getText()));
     }
   }
 
   public void handleHint(ActionEvent ev) {
     updateBoard();
     try {
-      Hint hint = Sudoku.hint(board);
+      // FIXME waiting for backend fix
+      // Hint hint = Sudoku.hint(board);
+      Hint hint = new Hint(0, 0, 4);
       int idx = hint.getX() * board.getSize() + hint.getY();
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
       // TODO ?
       changedButton.setBackground(red);
-    } catch (SudokuAlreadySolved e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (SudokuUnsolvable e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } 
+    } catch (Exception e) {
+      ;
+    }
+    // } catch (SudokuAlreadySolved e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (SudokuUnsolvable e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
   }
-  
+
   public void handleSolve(ActionEvent ev) {
     updateBoard();
-    
+    try {
+      Sudoku.solve(board);
+    } catch (Exception e) {
+      ;
+    }
+
   }
-  
+
   public void handleCheck(ActionEvent ev) {
     updateBoard();
-
+    try {
+      Sudoku.check(board);
+    } catch (Exception e) {
+      ;
+    }
   }
 }

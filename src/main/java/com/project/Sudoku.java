@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import com.project.exceptions.SudokuSolved;
+import com.project.exceptions.SudokuAlreadySolved;
+import com.project.exceptions.SudokuUnsolvable;
 
 public class Sudoku {
 
     private Sudoku() {
     }
 
-    public static void solve(Board board) {
+    public static void solve(Board board) throws SudokuAlreadySolved {
         Deque<Board> sudokusToCome = new LinkedList<>();
         if (fillOneBoard(board, sudokusToCome)) {
-            throw new NoSuchFieldError();
+            throw new SudokuAlreadySolved();
         }
     }
 
@@ -213,7 +214,7 @@ public class Sudoku {
         return 0;
     }
 
-    public static Hint hint(Board in) throws SudokuSolved {
+    public static Hint hint(Board in) throws SudokuAlreadySolved, SudokuUnsolvable {
         Deque<Board> sudokusToCome = new LinkedList<>();
         ArrayList<Integer> tilesLogic;
         ArrayList<Boolean> tilesPossibilities;
@@ -234,11 +235,11 @@ public class Sudoku {
             } else {
                 if (!sudokusToCome.isEmpty()) {
                     if (isSolved(board)) {
-                        throw new SudokuSolved();
+                        throw new SudokuAlreadySolved();
                     }
                     board = sudokusToCome.removeLast();
                 } else {
-                    throw new InvalidParameterException();
+                    throw new SudokuUnsolvable();
                 }
             }
         }

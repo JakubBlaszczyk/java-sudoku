@@ -48,14 +48,14 @@ public class Sudoku {
         }
     }
 
-    private static Tuple solveTick(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
+    private static Hint solveTick(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
             Deque<Board> sudokusToCome) {
         int currentIndex = findSmallest(board, tilesLogic);
         int x = currentIndex / board.getSize();
         int y = currentIndex - x * board.getSize();
         if (tilesLogic.get(currentIndex) == 1) {
-            Tuple temp = new Tuple(x,y,fetchNumber(board, tilesPossibilities, x, y));
-            board.setTileValue(x, y, temp.value);
+          Hint temp = new Hint(x,y,fetchNumber(board, tilesPossibilities, x, y));
+            board.setTileValue(x, y, temp.getValue());
             return temp;
         } else if (tilesLogic.get(currentIndex) > 1) {
             addSudokuOntoStack(board, tilesLogic, tilesPossibilities, sudokusToCome, x, y, currentIndex);
@@ -213,7 +213,7 @@ public class Sudoku {
         return 0;
     }
 
-    public static Tuple hint(Board in) throws SudokuSolved {
+    public static Hint hint(Board in) throws SudokuSolved {
         Deque<Board> sudokusToCome = new LinkedList<>();
         ArrayList<Integer> tilesLogic;
         ArrayList<Boolean> tilesPossibilities;

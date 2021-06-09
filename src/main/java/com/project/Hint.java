@@ -1,11 +1,11 @@
 package com.project;
 
-public class Tuple {
-  private int x;
+public class Hint {
+private int x;
   private int y;
   private int value;
 
-  public Tuple(int x, int y, int value) {
+  public Hint(int x, int y, int value) {
     this.x = x;
     this.y = y;
     this.value = value;

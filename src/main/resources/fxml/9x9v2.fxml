@@ -267,9 +267,9 @@
       </MenuBar>
       <HBox layoutX="5.0" layoutY="30.0" maxHeight="30.0" maxWidth="185.0" minHeight="30.0" minWidth="185.0" prefHeight="30.0" prefWidth="185.0">
          <children>
-            <Button fx:id="CheckButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Check" />
-            <Button fx:id="HintButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Hint" translateX="2.0" />
-            <Button fx:id="SolveButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Solve" translateX="4.0" />
+            <Button fx:id="CheckButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#handleCheck" prefHeight="30.0" prefWidth="60.0" text="Check" />
+            <Button fx:id="HintButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#handleHint" prefHeight="30.0" prefWidth="60.0" text="Hint" translateX="2.0" />
+            <Button fx:id="SolveButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#handleSolve" prefHeight="30.0" prefWidth="60.0" text="Solve" translateX="4.0" />
          </children>
       </HBox>
    </children>

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="390.0" maxWidth="290.0" minHeight="28.0" minWidth="187.0" prefHeight="28.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="390.0" maxWidth="290.0" minHeight="28.0" minWidth="187.0" prefHeight="28.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerMainWindow">
    <children>
       <MenuBar fx:id="functionBar" layoutX="5.0" layoutY="2.0" prefHeight="25.0" prefWidth="185.0">
          <menus>

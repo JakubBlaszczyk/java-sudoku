@@ -12,11 +12,13 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("/fxml/12x12.fxml"));
+    loader.setLocation(getClass().getResource("/fxml/Baza.fxml"));
     Parent root = loader.load();
-    Scene scene = new Scene(root, 1280, 800);
-    stage.setResizable(false);
-    stage.setTitle("FXML Welcome");
+    // Should be defined as consts somewhere
+    Scene scene = new Scene(root, 300, 275);
+    ControllerMainWindow cMainWindow = loader.getController();
+    cMainWindow.setStage(stage);
+    stage.setTitle("Baza here");
     stage.setScene(scene);
     stage.show();
   }

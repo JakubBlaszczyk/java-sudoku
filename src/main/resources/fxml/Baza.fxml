@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerMainWindow">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -18,11 +17,11 @@
               <menus>
                 <Menu mnemonicParsing="false" text="New Sudoku">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="6x6" />
-                        <MenuItem mnemonicParsing="false" text="8x8" />
-                        <MenuItem mnemonicParsing="false" text="9x9" />
-                        <MenuItem mnemonicParsing="false" text="10x10" />
-                        <MenuItem mnemonicParsing="false" text="12x12" />
+                    <MenuItem fx:id="Load6x6" mnemonicParsing="false" onAction="#handleNewBoard" text="6x6" />
+                        <MenuItem fx:id="Load8x8" mnemonicParsing="false" onAction="#handleNewBoard" text="8x8" />
+                        <MenuItem fx:id="Load9x9" mnemonicParsing="false" onAction="#handleNewBoard" text="9x9" />
+                        <MenuItem fx:id="Load10x10" mnemonicParsing="false" onAction="#handleNewBoard" text="10x10" />
+                        <MenuItem fx:id="Load12x12" mnemonicParsing="false" onAction="#handleNewBoard" text="12x12" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Save to file" />

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="365.0" maxWidth="255.0" minHeight="365.0" minWidth="255.0" prefHeight="365.0" prefWidth="255.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="365.0" maxWidth="255.0" minHeight="365.0" minWidth="255.0" prefHeight="365.0" prefWidth="255.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerBoard">
    <children>
       <GridPane fx:id="sudokuBoard" layoutX="5.0" layoutY="105.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <columnConstraints>
@@ -480,11 +480,11 @@
             <Menu fx:id="functionBar" mnemonicParsing="false" text="New sudoku">
                <items>
                   <MenuItem fx:id="loadFromFile" mnemonicParsing="false" text="Load from file" />
-                  <MenuItem fx:id="Load6x6" mnemonicParsing="false" text="6x6" />
-                  <MenuItem fx:id="Load8x8" mnemonicParsing="false" text="8x8" />
-                  <MenuItem fx:id="Load9x9" mnemonicParsing="false" text="9x9" />
-                  <MenuItem fx:id="Load10x10" mnemonicParsing="false" text="10x10" />
-                  <MenuItem fx:id="Load12x12" mnemonicParsing="false" text="12x12" />
+                  <MenuItem fx:id="Load6x6" mnemonicParsing="false" onAction="#handleNewBoard" text="6x6" />
+                  <MenuItem fx:id="Load8x8" mnemonicParsing="false" onAction="#handleNewBoard" text="8x8" />
+                  <MenuItem fx:id="Load9x9" mnemonicParsing="false" onAction="#handleNewBoard" text="9x9" />
+                  <MenuItem fx:id="Load10x10" mnemonicParsing="false" onAction="#handleNewBoard" text="10x10" />
+                  <MenuItem fx:id="Load12x12" mnemonicParsing="false" onAction="#handleNewBoard" text="12x12" />
                </items>
             </Menu>
             <Menu fx:id="SaveButton" mnemonicParsing="false" text="Save to file" />

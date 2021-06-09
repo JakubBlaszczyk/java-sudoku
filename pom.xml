@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.project</groupId>
-  <artifactId>fourier</artifactId>
+  <artifactId>sudoku</artifactId>
   <version>1.0-SNAPSHOT</version>
   <properties>
     <maven.compiler.release>11</maven.compiler.release>
@@ -43,7 +43,12 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>11.0.1</version>
-  </dependency>  
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.3.0-alpha5</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -90,68 +95,20 @@
         <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
         <executions>
           <execution>
-            <id>pre-unit-test</id>
+            <phase>package</phase>
             <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>check-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>check</goal>
+              <goal>shade</goal>
             </goals>
             <configuration>
-              <dataFile>${project.build.directory}/jacoco.exec</dataFile>
-              <rules>
-                <rule>
-                  <element>BUNDLE</element>
-                  <limits>
-                    <limit>
-                      <counter>INSTRUCTION</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>${jacoco.unit-tests.limit.instruction-ratio}</minimum>
-                    </limit>
-                    <limit>
-                      <counter>BRANCH</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>${jacoco.unit-tests.limit.branch-ratio}</minimum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>CLASS</element>
-                  <limits>
-                    <limit>
-                      <counter>COMPLEXITY</counter>
-                      <value>TOTALCOUNT</value>
-                      <maximum>${jacoco.unit-tests.limit.class-complexity}</maximum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>METHOD</element>
-                  <limits>
-                    <limit>
-                      <counter>COMPLEXITY</counter>
-                      <value>TOTALCOUNT</value>
-                      <maximum>${jacoco.unit-tests.limit.method-complexity}</maximum>
-                    </limit>
-                  </limits>
-                </rule>
-              </rules>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.project.SuperMain</mainClass>
+                </transformer>
+              </transformers>
             </configuration>
           </execution>
         </executions>
@@ -167,24 +124,4 @@
       </plugin>
     </plugins>
   </reporting>
-  <profiles>
-    <!-- Publish coverage report to Coveralls, only when running in Travis. -->
-    <profile>
-      <id>travis</id>
-      <activation>
-        <property>
-          <name>env.TRAVIS</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <version>${coveralls-maven-plugin.version}</version>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>

@@ -218,7 +218,7 @@
             <Button fx:id="Set8" layoutX="190.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="8" translateX="7.0" />
          </children>
       </HBox>
-      <MenuBar fx:id="functionBar" layoutX="5.0" layoutY="2.0" prefHeight="25.0" prefWidth="185.0">
+      <MenuBar fx:id="functionBar" layoutX="5.0" layoutY="2.0" prefHeight="25.0" prefWidth="100.0">
          <menus>
             <Menu fx:id="functionBar" mnemonicParsing="false" text="New sudoku">
                <items>
@@ -230,7 +230,6 @@
                   <MenuItem fx:id="Load12x12" mnemonicParsing="false" text="12x12" />
                </items>
             </Menu>
-            <Menu fx:id="SaveButton" mnemonicParsing="false" text="Save to file" />
          </menus>
       </MenuBar>
       <HBox layoutX="5.0" layoutY="30.0" maxHeight="30.0" maxWidth="185.0" minHeight="30.0" minWidth="185.0" prefHeight="30.0" prefWidth="185.0">
@@ -240,5 +239,6 @@
             <Button fx:id="SolveButton" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#handleSolve" prefHeight="30.0" prefWidth="60.0" text="Solve" translateX="4.0" />
          </children>
       </HBox>
+      <Button fx:id="saveToFile" layoutX="105.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleSaveToFile" prefHeight="25.0" prefWidth="84.0" text="Save to file" />
    </children>
 </AnchorPane>

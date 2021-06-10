@@ -59,7 +59,7 @@ public class Board {
   public static Board loadBoard(String filePath) throws IOException, InvalidSudokuData, InvalidSudokuSize {
     List<String> nums = loadArray(filePath);
     if (!checkIfStringIsParsable(nums)) {
-      log.info("Sudoku data contains not parsable characters");
+      log.warn("Sudoku data contains not parsable characters");
       throw new InvalidSudokuData();
     }
     Board board = createBoard(nums);

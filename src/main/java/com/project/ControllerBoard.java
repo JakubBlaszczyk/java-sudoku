@@ -87,7 +87,7 @@ public class ControllerBoard {
     }
     allButtons.sort((object1, object2) -> getIdValue(object1.getId()).compareTo(getIdValue(object2.getId())));
     for (Button button : allButtons) {
-      log.info(button.getId());
+      log.debug(button.getId());
     }
   }
 
@@ -146,7 +146,7 @@ public class ControllerBoard {
   }
 
   public void startup(Stage mainStage, Stage currentStage, Board board) {
-    log.info("Startup");
+    log.debug("Startup");
     this.board = board;
     this.mainStage = mainStage;
     this.currentStage = currentStage;
@@ -168,11 +168,6 @@ public class ControllerBoard {
       for (int i = 0; i < allButtons.size(); ++i) {
         allButtons.get(i).setText(String.valueOf(board.getTilesValue().get(i)));
       }
-    }
-    // test
-    log.info("TEST");
-    for (Button button : allButtons) {
-      log.info(button.getText());
     }
   }
 
@@ -335,6 +330,8 @@ public class ControllerBoard {
     try {
       Hint hint = Sudoku.hint(board);
       int idx = hint.getX() * board.getSize() + hint.getY();
+      log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
+      log.debug("IDX: {}", idx);
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
       // TODO ?

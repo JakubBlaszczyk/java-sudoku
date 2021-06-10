@@ -121,7 +121,7 @@ public class Board {
   }
 
   // Data have to be colleded by rows
-  public void saveBoard(String filePath, List<Integer> data) throws IOException {
+  public static void saveBoard(String filePath, List<Integer> data) throws IOException {
 
     FileWriter wr = new FileWriter(filePath);
     // Data from GUI so it must be corret

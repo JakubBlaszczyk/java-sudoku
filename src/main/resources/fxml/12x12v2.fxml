@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="485.0" maxWidth="380.0" minHeight="485.0" minWidth="380.0" prefHeight="485.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="485.0" maxWidth="380.0" minHeight="485.0" minWidth="380.0" prefHeight="485.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerBoard">
    <children>
       <GridPane fx:id="sudokuBoard" layoutX="5.0" layoutY="105.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <columnConstraints>

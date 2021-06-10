@@ -23,6 +23,7 @@ import com.project.exceptions.SudokuUnsolvable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.core.joran.action.Action;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,6 +46,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -315,9 +317,9 @@ public class ControllerBoard {
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (InvalidSudokuData e) {
-      throw new RuntimeException(e);
+      new Alert(Alert.AlertType.INFORMATION, "Not parsable characters in sudoku board").show();
     } catch (InvalidSudokuSize e) {
-      throw new RuntimeException(e);
+      new Alert(Alert.AlertType.INFORMATION, "Invalid sudoku size, should be 6x6, 8x8, 9x9, 10x10, 12x12").show();
     }
   }
 
@@ -331,24 +333,17 @@ public class ControllerBoard {
   public void handleHint(ActionEvent ev) {
     updateBoard();
     try {
-      // FIXME waiting for backend fix
-      // Hint hint = Sudoku.hint(board);
-      Hint hint = new Hint(0, 0, 4);
+      Hint hint = Sudoku.hint(board);
       int idx = hint.getX() * board.getSize() + hint.getY();
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
       // TODO ?
       changedButton.setBackground(red);
-    } catch (Exception e) {
-      ;
+    } catch (SudokuAlreadySolved e) {
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
+    } catch (SudokuUnsolvable e) {
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
-    // } catch (SudokuAlreadySolved e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (SudokuUnsolvable e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
   }
 
   public void handleSolve(ActionEvent ev) {
@@ -358,15 +353,26 @@ public class ControllerBoard {
     } catch (Exception e) {
       ;
     }
-
   }
 
   public void handleCheck(ActionEvent ev) {
     updateBoard();
     try {
-      Sudoku.check(board);
+      // Sudoku.check(board);
     } catch (Exception e) {
       ;
+    }
+  }
+
+  public void handleSaveToFile(ActionEvent ev) {
+    // Board.saveBoard(filePath, data);
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    File selectedDirectory = directoryChooser.showDialog(currentStage);
+
+    if (selectedDirectory == null) {
+      // No Directory selected
+    } else {
+      System.out.println(selectedDirectory.getAbsolutePath());
     }
   }
 }

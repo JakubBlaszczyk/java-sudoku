@@ -26,7 +26,7 @@
           <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="loadFromFile" maxHeight="30.0" maxWidth="90.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleNewBoard" prefHeight="30.0" prefWidth="90.0" text="Load from file" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="loadFromFile" maxHeight="30.0" maxWidth="90.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleLoadFile" prefHeight="30.0" prefWidth="90.0" text="Load from file" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="Board8x8" layoutX="33.0" layoutY="18.0" maxHeight="30.0" maxWidth="90.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleNewBoard" prefHeight="30.0" prefWidth="90.0" text="Board 8x8" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button fx:id="Board10x10" layoutX="33.0" layoutY="18.0" maxHeight="30.0" maxWidth="90.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleNewBoard" prefHeight="30.0" prefWidth="90.0" text="Board 10x10" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Button fx:id="Board6x6" layoutX="33.0" layoutY="18.0" maxHeight="30.0" maxWidth="90.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleNewBoard" prefHeight="30.0" prefWidth="90.0" text="Board 6x6" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />

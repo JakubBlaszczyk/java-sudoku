@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,8 @@ class AppTest {
     Board board = new Board6x6(vals);
     Hint hint = Sudoku.hint(board);
     Hint correctHint = new Hint(0, 0, 4);
-    assertEquals(correctHint, hint);
+    assertEquals(correctHint.getX(), hint.getX());
+    assertEquals(correctHint.getY(), hint.getY());
+    assertEquals(correctHint.getValue(), hint.getValue());
   }
 }

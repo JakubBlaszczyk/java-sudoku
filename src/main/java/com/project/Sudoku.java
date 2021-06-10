@@ -173,7 +173,7 @@ public class Sudoku {
       tempX = (x / board.getBoxWidth()) * board.getBoxWidth();
       tempY = (y / board.getBoxHeight()) * board.getBoxHeight();
       for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
-        for (int j = tempX; j < tempY + board.getBoxHeight(); ++j) {
+        for (int j = tempY; j < tempY + board.getBoxHeight(); ++j) {
           if (board.getTileValue(i, j) != 0) {
             tilesPossibilities.set(posInPossibilities + board.getTileValue(i, j) - 1, false);
           }

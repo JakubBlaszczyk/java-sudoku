@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.project.exceptions.SudokuAlreadySolved;
 import com.project.exceptions.SudokuUnsolvable;
@@ -34,13 +35,13 @@ public class Sudoku {
     }
     while (true) {
       updateLogic(board, tilesLogic, tilesPossibilities);
-      if (isSolvable(board, tilesLogic)) {
+      if (isSolvableInternal(board, tilesLogic)) {
         solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
       } else {
+        if (isSolved(board)) {
+          return true;
+        }
         if (!sudokusToCome.isEmpty()) {
-          if (isSolved(board)) {
-            return true;
-          }
           board = sudokusToCome.removeLast();
         } else {
           return false;
@@ -100,7 +101,7 @@ public class Sudoku {
     return true;
   }
 
-  private static boolean isSolvable(Board board, ArrayList<Integer> tilesLogic) {
+  private static boolean isSolvableInternal(Board board, ArrayList<Integer> tilesLogic) {
     boolean anyValue = false;
     for (int i = 0; i < board.getSize(); ++i) {
       for (int j = 0; j < board.getSize(); ++j) {
@@ -119,8 +120,8 @@ public class Sudoku {
     filledUpdate(board, tilesLogic, tilesPossibilities);
     for (int i = 0; i < board.getSize(); ++i) {
       for (int j = 0; j < board.getSize(); ++j) {
-        rowLogic(board, tilesLogic, tilesPossibilities, i, j);
-        columnLogic(board, tilesLogic, tilesPossibilities, i, j);
+        rowLogic(board, tilesPossibilities, i, j);
+        columnLogic(board, tilesPossibilities, i, j);
         boxLogic(board, tilesLogic, tilesPossibilities, i, j);
       }
     }
@@ -140,8 +141,7 @@ public class Sudoku {
     }
   }
 
-  private static void rowLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities, int x,
-      int y) {
+  private static void rowLogic(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
     // if it needs refreshing breeze through line
     if (board.getTileValue(x, y) == 0) {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
@@ -153,8 +153,7 @@ public class Sudoku {
     }
   }
 
-  private static void columnLogic(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
-      int x, int y) {
+  private static void columnLogic(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
     if (board.getTileValue(x, y) == 0) {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
       for (int i = 0; i < board.getSize(); ++i) {
@@ -230,7 +229,7 @@ public class Sudoku {
     }
     while (true) {
       updateLogic(board, tilesLogic, tilesPossibilities);
-      if (isSolvable(board, tilesLogic)) {
+      if (isSolvableInternal(board, tilesLogic)) {
         return solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
       } else {
         if (isSolved(board)) {
@@ -245,12 +244,30 @@ public class Sudoku {
     }
   }
 
+  private static ArrayList<Hint> compareSudokus(Board main, Board solved) {
+    ArrayList<Hint> returnValue = new ArrayList<>();
+    for (int i = 0; i < main.getSize() * main.getSize(); ++i) {
+      int x = i / main.getSize();
+      int y = i % main.getSize();
+      if (main.getTileValue(x, y) != 0 && main.getTileValue(x, y) != solved.getTileValue(x, y)) {
+        returnValue.add(new Hint(x, y, solved.getTileValue(x, y)));
+      }
+    }
+    return returnValue;
+  }
+
+  public static Boolean isSolvable(Board board) {
+    Deque<Board> sudokusToCome = new LinkedList<>();
+    Board temp = board;
+    return fillOneBoard(temp, sudokusToCome);
+  }
+
   // this method checks if this Board has an solution
   // if even one solution exists, will return true
-  public static Boolean check(Board in) throws SudokuUnsolvable {
+  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
     Deque<Board> correctSudokus = new LinkedList<>();
-    Board board = in;
+    Board board = original;
     if (!fillOneBoard(board, sudokusToCome)) {
       throw new SudokuUnsolvable();
     }
@@ -260,11 +277,16 @@ public class Sudoku {
       correctSudokus.push(temp);
       temp = sudokusToCome.removeLast();
     }
+    ArrayList<Hint> min = new ArrayList<>();
+    for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
+      min.add(new Hint(0, 0, 0));
+    }
     for (Board one : correctSudokus) {
-      if (one == in) {
-        return true;
+      ArrayList<Hint> data = compareSudokus(in, one);
+      if (data.size() <= min.size()) {
+        min = data;
       }
     }
-    return false;
+    return min;
   }
 }

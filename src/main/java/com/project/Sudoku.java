@@ -26,11 +26,11 @@ public class Sudoku {
     int size = board.getSize();
     tilesLogic = new ArrayList<>(size * size);
     tilesPossibilities = new ArrayList<>(size * size * size);
-    for (int i = 0; i < tilesPossibilities.size(); ++i) {
-      tilesPossibilities.set(i, true);
+    for (int i = 0; i < size * size * size; ++i) {
+      tilesPossibilities.add(true);
     }
-    for (int i = 0; i < tilesLogic.size(); ++i) {
-      tilesLogic.set(i, size);
+    for (int i = 0; i < size * size; ++i) {
+      tilesLogic.add(size);
     }
     while (true) {
       updateLogic(board, tilesLogic, tilesPossibilities);

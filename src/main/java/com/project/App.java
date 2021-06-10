@@ -12,7 +12,7 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("/fxml/Baza.fxml"));
+    loader.setLocation(getClass().getResource("/fxml/Bazav2.fxml"));
     Parent root = loader.load();
     // Should be defined as consts somewhere
     Scene scene = new Scene(root, 300, 275);

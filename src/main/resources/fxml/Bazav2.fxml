@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="390.0" maxWidth="290.0" minHeight="28.0" minWidth="187.0" prefHeight="28.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerMainWindow">
+   <children>
+      <MenuBar fx:id="functionBar" layoutX="5.0" layoutY="2.0" prefHeight="25.0" prefWidth="185.0">
+         <menus>
+            <Menu fx:id="functionBar" mnemonicParsing="false" text="New sudoku">
+               <items>
+                  <MenuItem fx:id="loadFromFile" mnemonicParsing="false" onAction="#handleLoadFile" text="Load from file" />
+                  <MenuItem fx:id="Load6x6" mnemonicParsing="false" onAction="#handleNewBoard" text="6x6" />
+                  <MenuItem fx:id="Load8x8" mnemonicParsing="false" onAction="#handleNewBoard" text="8x8" />
+                  <MenuItem fx:id="Load9x9" mnemonicParsing="false" onAction="#handleNewBoard" text="9x9" />
+                  <MenuItem fx:id="Load10x10" mnemonicParsing="false" onAction="#handleNewBoard" text="10x10" />
+                  <MenuItem fx:id="Load12x12" mnemonicParsing="false" onAction="#handleNewBoard" text="12x12" />
+               </items>
+            </Menu>
+            <Menu fx:id="SaveButton" mnemonicParsing="false" text="Save to file" />
+         </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

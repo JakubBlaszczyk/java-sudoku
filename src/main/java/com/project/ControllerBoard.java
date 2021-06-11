@@ -60,16 +60,17 @@ import javafx.util.Duration;
 public class ControllerBoard {
   private static Logger log = LoggerFactory.getLogger(ControllerBoard.class);
 
-  Background red = new Background(new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
-  Background white = new Background(
+  private Background red = new Background(
+      new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
+  private Background white = new Background(
       new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
-  Stage mainStage = null;
-  Stage currentStage = null;
-  List<Button> allButtons = null;
-  Board board = null;
-  Board startingBoard = null;
-  boolean editFlag = true;
-  Date start = null;
+  private Stage mainStage = null;
+  private Stage currentStage = null;
+  private List<Button> allButtons = null;
+  private Board board = null;
+  private Board startingBoard = null;
+  private boolean editFlag = true;
+  private Date start = null;
 
   @FXML
   private GridPane sudokuBoard;

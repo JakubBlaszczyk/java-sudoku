@@ -385,6 +385,8 @@ public class ControllerBoard {
       updateButtons(this.board);
     } catch (SudokuAlreadySolved e) {
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
+    } catch (SudokuUnsolvable e) {
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
 

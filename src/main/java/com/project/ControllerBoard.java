@@ -67,6 +67,7 @@ public class ControllerBoard {
   Stage currentStage = null;
   List<Button> allButtons = null;
   Board board = null;
+  Board startingBoard = null;
 
   @FXML
   private GridPane sudokuBoard;
@@ -254,7 +255,6 @@ public class ControllerBoard {
     }
     try {
       board = Board.loadBoard(fHandle.getAbsolutePath());
-      List<Integer> vals = board.getTilesValue();
       Stage stage;
       Parent root;
       FXMLLoader loader;
@@ -328,6 +328,13 @@ public class ControllerBoard {
     }
   }
 
+  private void updateButtons() {
+    List<Integer> newValues = board.getTilesValue();
+    for (int i = 0; i < newValues.size(); ++i) {
+      allButtons.get(i).setText(String.valueOf(newValues.get(i)));
+    }
+  }
+
   public void handleHint(ActionEvent ev) {
     updateBoard();
     try {
@@ -349,16 +356,20 @@ public class ControllerBoard {
   public void handleSolve(ActionEvent ev) {
     updateBoard();
     try {
+      // Board will be changed?
       Sudoku.solve(board);
-    } catch (Exception e) {
-      ;
+      // Stop timer
+      updateButtons();
+    } catch (SudokuAlreadySolved e) {
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
     }
   }
 
   public void handleCheck(ActionEvent ev) {
     updateBoard();
     try {
-      // Sudoku.check(board);
+      List<Hint> mistakes = Sudoku.check(board, startingBoard);
+      // Show mistakes
     } catch (Exception e) {
       ;
     }

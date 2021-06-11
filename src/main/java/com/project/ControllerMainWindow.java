@@ -45,6 +45,7 @@ public class ControllerMainWindow {
           log.debug("Board 6x6");
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
           newBoard = new Board6x6(new ArrayList<>());
+          newBoard.initializeList(6*6, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP6 - Czas 0");
@@ -54,6 +55,7 @@ public class ControllerMainWindow {
           log.debug("Board 8x8");
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
           newBoard = new Board8x8(new ArrayList<>());
+          newBoard.initializeList(8*8, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP8 - Czas 0");
@@ -63,6 +65,7 @@ public class ControllerMainWindow {
           log.debug("Board 9x9");
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
           newBoard = new Board9x9(new ArrayList<>());
+          newBoard.initializeList(9*9, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP9 - Czas 0");
@@ -72,6 +75,7 @@ public class ControllerMainWindow {
           log.debug("Board 10x10");
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
           newBoard = new Board10x10(new ArrayList<>());
+          newBoard.initializeList(10*10, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP10 - Czas 0");
@@ -81,6 +85,7 @@ public class ControllerMainWindow {
           log.debug("Board 12x12");
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
           newBoard = new Board12x12(new ArrayList<>());
+          newBoard.initializeList(12*12, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP12 - Czas 0");

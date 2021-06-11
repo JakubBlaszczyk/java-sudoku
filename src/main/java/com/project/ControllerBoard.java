@@ -184,6 +184,7 @@ public class ControllerBoard {
           log.debug("Loading 6x6");
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
           newBoard = new Board6x6(new ArrayList<>());
+          newBoard.initializeList(6*6, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP6 - Czas 0");
@@ -193,6 +194,7 @@ public class ControllerBoard {
           log.debug("Loading 8x8");
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
           newBoard = new Board8x8(new ArrayList<>());
+          newBoard.initializeList(8*8, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP8 - Czas 0");
@@ -202,6 +204,7 @@ public class ControllerBoard {
           log.debug("Loading 9x9");
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
           newBoard = new Board9x9(new ArrayList<>());
+          newBoard.initializeList(9*9, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP9 - Czas 0");
@@ -211,6 +214,7 @@ public class ControllerBoard {
           log.debug("Loading 10x10");
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
           newBoard = new Board10x10(new ArrayList<>());
+          newBoard.initializeList(10*10, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP10 - Czas 0");
@@ -220,6 +224,7 @@ public class ControllerBoard {
           log.debug("Loading 12x12");
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
           newBoard = new Board12x12(new ArrayList<>());
+          newBoard.initializeList(12*12, 0);
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("TMP12 - Czas 0");
@@ -240,7 +245,7 @@ public class ControllerBoard {
     }
   }
 
-  public void handleLoadFile(ActionEvent ev) throws MalformedLinkException {
+  public void LoadFromFile(ActionEvent ev) throws MalformedLinkException {
     FileChooser fChooser = new FileChooser();
     fChooser.setTitle("Choose sudoku board file");
     File fHandle = fChooser.showOpenDialog(currentStage);
@@ -250,10 +255,6 @@ public class ControllerBoard {
     try {
       board = Board.loadBoard(fHandle.getAbsolutePath());
       List<Integer> vals = board.getTilesValue();
-      // for (int i = 0; i < vals.size(); ++i) {
-      // allButtons.get(i).setText(String.valueOf(vals.get(i)));
-      // }
-      ///
       Stage stage;
       Parent root;
       FXMLLoader loader;

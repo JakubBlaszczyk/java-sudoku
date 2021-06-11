@@ -27,6 +27,11 @@ public class Board {
     this.tilesValue = tilesValue;
   }
 
+  public Board copy()
+  {
+    return new Board(new ArrayList<>(tilesValue));
+  }
+
   public int getSize() {
     return 0;
   }

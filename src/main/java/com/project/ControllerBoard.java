@@ -369,8 +369,10 @@ public class ControllerBoard {
       // TODO ?
       changedButton.setBackground(red);
     } catch (SudokuAlreadySolved e) {
+      log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
     } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
@@ -384,8 +386,10 @@ public class ControllerBoard {
       // Stop timer
       updateButtons(this.board);
     } catch (SudokuAlreadySolved e) {
+      log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
     } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
@@ -399,6 +403,7 @@ public class ControllerBoard {
     try {
       log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
+      log.debug("Check passed");
       for (Hint hint : mistakes) {
         int idx = hint.getX() * board.getSize() + hint.getY();
         log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
@@ -407,8 +412,9 @@ public class ControllerBoard {
         changedButton.setText(String.valueOf(hint.getValue()));
       }
       // Show mistakes
-    } catch (Exception e) {
-      ;
+    } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
 

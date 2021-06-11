@@ -363,6 +363,10 @@ public class ControllerBoard {
       ;
     }
   }
+  
+  public void changeMode(ActionEvent ev) {
+    ;
+  }
 
   public void handleSaveToFile(ActionEvent ev) {
     // Board.saveBoard(filePath, data);

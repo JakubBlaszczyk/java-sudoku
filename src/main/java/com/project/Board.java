@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class Board {
   private static Logger log = LoggerFactory.getLogger(Board.class);
 
-  private List<Integer> tilesValue;
+  protected List<Integer> tilesValue;
 
   public Board(List<Integer> tilesValue) {
     this.tilesValue = tilesValue;

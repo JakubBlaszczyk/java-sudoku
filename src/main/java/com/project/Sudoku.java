@@ -74,7 +74,7 @@ public class Sudoku {
     for (int i = 1; i < tilesLogic.get(currentIndex); ++i) {
       for (; j < size; ++j) {
         if (Boolean.TRUE.equals(tilesPossibilities.get(x * doubleSize + y * size + j))) {
-          Board tempBoard = board;
+          Board tempBoard = board.copy();
           tempBoard.setTileValue(x, y, j + 1);
           sudokusToCome.add(tempBoard);
           ++j;
@@ -217,7 +217,7 @@ public class Sudoku {
     Deque<Board> sudokusToCome = new LinkedList<>();
     ArrayList<Integer> tilesLogic;
     ArrayList<Boolean> tilesPossibilities;
-    Board board = in;
+    Board board = in.copy();
     int size = board.getSize();
     tilesLogic = new ArrayList<>(size * size);
     tilesPossibilities = new ArrayList<>(size * size * size);
@@ -230,7 +230,19 @@ public class Sudoku {
     while (true) {
       updateLogic(board, tilesLogic, tilesPossibilities);
       if (isSolvableInternal(board, tilesLogic)) {
-        return solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
+        Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
+        if (temp == null) {
+          for (int i = 0; i < sudokusToCome.size();) {
+            ArrayList<Hint> temp2 = compareSudokus(board, sudokusToCome.removeFirst());
+            temp = temp2.get(0);
+            if (fillOneBoard(sudokusToCome.removeFirst(), sudokusToCome)) {
+              return temp;
+            } else {
+              throw new SudokuUnsolvable();
+            }
+          }
+        }
+        return temp;
       } else {
         if (isSolved(board)) {
           throw new SudokuAlreadySolved();
@@ -244,6 +256,8 @@ public class Sudoku {
     }
   }
 
+  // returns array of hints pointing to fields that were already filled.
+  // Does not fill empty fields
   private static ArrayList<Hint> compareSudokus(Board main, Board solved) {
     ArrayList<Hint> returnValue = new ArrayList<>();
     for (int i = 0; i < main.getSize() * main.getSize(); ++i) {
@@ -258,7 +272,7 @@ public class Sudoku {
 
   public static Boolean isSolvable(Board board) {
     Deque<Board> sudokusToCome = new LinkedList<>();
-    Board temp = board;
+    Board temp = board.copy();
     return fillOneBoard(temp, sudokusToCome);
   }
 
@@ -267,7 +281,7 @@ public class Sudoku {
   public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
     Deque<Board> correctSudokus = new LinkedList<>();
-    Board board = original;
+    Board board = original.copy();
     if (!fillOneBoard(board, sudokusToCome)) {
       throw new SudokuUnsolvable();
     }

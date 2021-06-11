@@ -37,6 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -46,8 +47,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -368,8 +369,10 @@ public class ControllerBoard {
       // TODO ?
       changedButton.setBackground(red);
     } catch (SudokuAlreadySolved e) {
+      log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
     } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
@@ -383,18 +386,35 @@ public class ControllerBoard {
       // Stop timer
       updateButtons(this.board);
     } catch (SudokuAlreadySolved e) {
+      log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
+    } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
 
   public void handleCheck(ActionEvent ev) {
     updateBoard(this.board);
+    if (editFlag) {
+      startingBoard = board.copy();
+      updateBoard(startingBoard);
+    }
     try {
       log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
+      log.debug("Check passed");
+      for (Hint hint : mistakes) {
+        int idx = hint.getX() * board.getSize() + hint.getY();
+        log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
+        log.debug("IDX: {}", idx);
+        Button changedButton = allButtons.get(idx);
+        changedButton.setText(String.valueOf(hint.getValue()));
+      }
       // Show mistakes
-    } catch (Exception e) {
-      ;
+    } catch (SudokuUnsolvable e) {
+      log.debug("Unsolvable", e);
+      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
     }
   }
 
@@ -404,6 +424,7 @@ public class ControllerBoard {
       editFlag = false;
       modeLabel.setText("Solve mode");
       startingBoard = board.copy();
+      log.debug("updating startingBoard");
       updateBoard(startingBoard);
       start = Calendar.getInstance().getTime();
     } else {
@@ -414,14 +435,24 @@ public class ControllerBoard {
   }
 
   public void handleSaveToFile(ActionEvent ev) {
-    // Board.saveBoard(filePath, data);
-    DirectoryChooser directoryChooser = new DirectoryChooser();
-    File selectedDirectory = directoryChooser.showDialog(currentStage);
-
-    if (selectedDirectory == null) {
-      // No Directory selected
-    } else {
-      System.out.println(selectedDirectory.getAbsolutePath());
+    Menu file = new Menu("File");
+    MenuItem item = new MenuItem("Save");
+    file.getItems().addAll(item);
+    // Creating a File chooser
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save");
+    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+    File fHandle = fileChooser.showSaveDialog(currentStage);
+    if (fHandle == null) {
+      return;
+    }
+    log.debug(fHandle.getAbsolutePath());
+    updateBoard(this.board);
+    try {
+      Board.saveBoard(fHandle.getAbsolutePath(), this.board.getTilesValue());
+    } catch (IOException e) {
+      log.error("Cannot save file in the specified path", e);
+      new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
     }
   }
 }

@@ -14,10 +14,92 @@ public class Sudoku {
   private Sudoku() {
   }
 
-  public static void solve(Board board) throws SudokuAlreadySolved {
+  public static void solve(Board board) throws SudokuAlreadySolved, SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
-    if (fillOneBoard(board, sudokusToCome)) {
+    if (isSolved(board)) {
       throw new SudokuAlreadySolved();
+    }
+    if (!fillOneBoard(board, sudokusToCome)) {
+      throw new SudokuUnsolvable();
+    }
+  }
+
+  // this method checks if this Board has an solution
+  // if even one solution exists, will return true
+  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable, SudokuAlreadySolved {
+    Deque<Board> sudokusToCome = new LinkedList<>();
+    Deque<Board> correctSudokus = new LinkedList<>();
+    Board board = original.copy();
+    if (isSolved(board)) {
+      throw new SudokuAlreadySolved();
+    }
+    if (!fillOneBoard(board, sudokusToCome)) {
+      throw new SudokuUnsolvable();
+    }
+    correctSudokus.push(board);
+    if (sudokusToCome.isEmpty()) {
+      throw new SudokuAlreadySolved();
+    }
+    Board temp = sudokusToCome.removeLast();
+    while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 30) {
+      correctSudokus.push(temp);
+      temp = sudokusToCome.removeLast();
+    }
+    ArrayList<Hint> min = new ArrayList<>();
+    for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
+      min.add(new Hint(0, 0, 0));
+    }
+    for (Board one : correctSudokus) {
+      ArrayList<Hint> data = compareSudokus(in, one);
+      if (data.size() <= min.size()) {
+        min = data;
+      }
+    }
+    return min;
+  }
+
+  public static Hint hint(Board in) throws SudokuAlreadySolved, SudokuUnsolvable {
+    Deque<Board> sudokusToCome = new LinkedList<>();
+    ArrayList<Integer> tilesLogic;
+    ArrayList<Boolean> tilesPossibilities;
+    Board board = in.copy();
+    int size = board.getSize();
+    tilesLogic = new ArrayList<>(size * size);
+    tilesPossibilities = new ArrayList<>(size * size * size);
+    for (int i = 0; i < size * size * size; ++i) {
+      tilesPossibilities.add(true);
+    }
+    for (int i = 0; i < size * size; ++i) {
+      tilesLogic.add(size);
+    }
+    while (true) {
+      updateLogic(board, tilesLogic, tilesPossibilities);
+      if (isSolvableInternal(board, tilesLogic)) {
+        Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
+        if (temp == null) {
+          for (int i = 0; i < sudokusToCome.size();) {
+
+            Board toGive = sudokusToCome.removeFirst();
+            ArrayList<Hint> temp2 = compareSudokus(board, toGive);
+            temp = temp2.get(0);
+            if (fillOneBoard(toGive, sudokusToCome)) {
+              return temp;
+            } else {
+              throw new SudokuUnsolvable();
+            }
+          }
+        }
+        return temp;
+      } else {
+        if (isSolved(board)) {
+          throw new SudokuAlreadySolved();
+        }
+        if (!sudokusToCome.isEmpty()) {
+          board = sudokusToCome.removeLast();
+        } else {
+          throw new SudokuUnsolvable();
+        }
+      }
     }
   }
 
@@ -43,6 +125,9 @@ public class Sudoku {
         }
         if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
+          for (int i = 0; i < size * size * size; ++i) {
+            tilesPossibilities.set(i, true);
+          }
         } else {
           return false;
         }
@@ -213,49 +298,6 @@ public class Sudoku {
     return 0;
   }
 
-  public static Hint hint(Board in) throws SudokuAlreadySolved, SudokuUnsolvable {
-    Deque<Board> sudokusToCome = new LinkedList<>();
-    ArrayList<Integer> tilesLogic;
-    ArrayList<Boolean> tilesPossibilities;
-    Board board = in.copy();
-    int size = board.getSize();
-    tilesLogic = new ArrayList<>(size * size);
-    tilesPossibilities = new ArrayList<>(size * size * size);
-    for (int i = 0; i < size * size * size; ++i) {
-      tilesPossibilities.add(true);
-    }
-    for (int i = 0; i < size * size; ++i) {
-      tilesLogic.add(size);
-    }
-    while (true) {
-      updateLogic(board, tilesLogic, tilesPossibilities);
-      if (isSolvableInternal(board, tilesLogic)) {
-        Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
-        if (temp == null) {
-          for (int i = 0; i < sudokusToCome.size();) {
-            ArrayList<Hint> temp2 = compareSudokus(board, sudokusToCome.removeFirst());
-            temp = temp2.get(0);
-            if (fillOneBoard(sudokusToCome.removeFirst(), sudokusToCome)) {
-              return temp;
-            } else {
-              throw new SudokuUnsolvable();
-            }
-          }
-        }
-        return temp;
-      } else {
-        if (isSolved(board)) {
-          throw new SudokuAlreadySolved();
-        }
-        if (!sudokusToCome.isEmpty()) {
-          board = sudokusToCome.removeLast();
-        } else {
-          throw new SudokuUnsolvable();
-        }
-      }
-    }
-  }
-
   // returns array of hints pointing to fields that were already filled.
   // Does not fill empty fields
   private static ArrayList<Hint> compareSudokus(Board main, Board solved) {
@@ -276,31 +318,4 @@ public class Sudoku {
     return fillOneBoard(temp, sudokusToCome);
   }
 
-  // this method checks if this Board has an solution
-  // if even one solution exists, will return true
-  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable {
-    Deque<Board> sudokusToCome = new LinkedList<>();
-    Deque<Board> correctSudokus = new LinkedList<>();
-    Board board = original.copy();
-    if (!fillOneBoard(board, sudokusToCome)) {
-      throw new SudokuUnsolvable();
-    }
-    correctSudokus.push(board);
-    Board temp = sudokusToCome.removeLast();
-    while (fillOneBoard(temp, sudokusToCome)) {
-      correctSudokus.push(temp);
-      temp = sudokusToCome.removeLast();
-    }
-    ArrayList<Hint> min = new ArrayList<>();
-    for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
-      min.add(new Hint(0, 0, 0));
-    }
-    for (Board one : correctSudokus) {
-      ArrayList<Hint> data = compareSudokus(in, one);
-      if (data.size() <= min.size()) {
-        min = data;
-      }
-    }
-    return min;
-  }
 }

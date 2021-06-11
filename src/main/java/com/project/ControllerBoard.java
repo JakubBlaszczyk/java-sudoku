@@ -390,9 +390,20 @@ public class ControllerBoard {
 
   public void handleCheck(ActionEvent ev) {
     updateBoard(this.board);
+    if (editFlag) {
+      startingBoard = board.copy();
+      updateBoard(startingBoard);
+    }
     try {
       log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
+      for (Hint hint : mistakes) {
+        int idx = hint.getX() * board.getSize() + hint.getY();
+        log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
+        log.debug("IDX: {}", idx);
+        Button changedButton = allButtons.get(idx);
+        changedButton.setText(String.valueOf(hint.getValue()));
+      }
       // Show mistakes
     } catch (Exception e) {
       ;

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="390.0" maxWidth="290.0" minHeight="390.0" minWidth="290.0" prefHeight="390.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="390.0" maxWidth="290.0" minHeight="390.0" minWidth="290.0" prefHeight="390.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerBoard">
    <children>
       <GridPane fx:id="sudokuBoard" layoutX="5.0" layoutY="105.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <columnConstraints>
@@ -254,7 +254,7 @@
          <menus>
             <Menu fx:id="functionBar" mnemonicParsing="false" text="New sudoku">
                <items>
-                  <MenuItem fx:id="loadFromFile" mnemonicParsing="false" onAction="#handleLoadFile" text="Load from file" />
+                  <MenuItem fx:id="loadFromFile" mnemonicParsing="false" onAction="#LoadFromFile" text="Load from file" />
                   <MenuItem fx:id="Load6x6" mnemonicParsing="false" onAction="#handleNewBoard" text="6x6" />
                   <MenuItem fx:id="Load8x8" mnemonicParsing="false" onAction="#handleNewBoard" text="8x8" />
                   <MenuItem fx:id="Load9x9" mnemonicParsing="false" onAction="#handleNewBoard" text="9x9" />

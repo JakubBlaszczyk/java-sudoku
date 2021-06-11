@@ -415,6 +415,9 @@ public class ControllerBoard {
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
+    } catch (SudokuAlreadySolved e) {
+      log.debug("Already solved", e);
+      new Alert(Alert.AlertType.INFORMATION, "Already solved").show();
     }
   }
 

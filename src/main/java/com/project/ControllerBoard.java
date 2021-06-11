@@ -358,6 +358,7 @@ public class ControllerBoard {
   public void handleHint(ActionEvent ev) {
     updateBoard(this.board);
     try {
+      log.info("Calling hint");
       Hint hint = Sudoku.hint(board);
       int idx = hint.getX() * board.getSize() + hint.getY();
       log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
@@ -377,6 +378,7 @@ public class ControllerBoard {
     updateBoard(this.board);
     try {
       // Board will be changed?
+      log.info("Calling solve");
       Sudoku.solve(board);
       // Stop timer
       updateButtons(this.board);
@@ -388,6 +390,7 @@ public class ControllerBoard {
   public void handleCheck(ActionEvent ev) {
     updateBoard(this.board);
     try {
+      log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
       // Show mistakes
     } catch (Exception e) {

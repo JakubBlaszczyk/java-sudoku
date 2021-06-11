@@ -21,14 +21,13 @@ import org.slf4j.LoggerFactory;
 public class Board {
   private static Logger log = LoggerFactory.getLogger(Board.class);
 
-  private List<Integer> tilesValue;
+  protected List<Integer> tilesValue;
 
   public Board(List<Integer> tilesValue) {
     this.tilesValue = tilesValue;
   }
 
-  public Board copy()
-  {
+  public Board copy() {
     return new Board(new ArrayList<>(tilesValue));
   }
 
@@ -108,7 +107,7 @@ public class Board {
   }
 
   private static Board createBoard(List<String> list) throws InvalidSudokuSize {
-    switch ((int)Math.sqrt(list.size())) {
+    switch ((int) Math.sqrt(list.size())) {
       case 6:
         return new Board6x6(new ArrayList<>());
       case 8:

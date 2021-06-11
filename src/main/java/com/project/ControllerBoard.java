@@ -233,6 +233,7 @@ public class ControllerBoard {
       ControllerBoard cBoard = loader.getController();
       cBoard.startup(mainStage, stage, newBoard);
       currentStage.close();
+      stage.setResizable(false);
       stage.show();
     } catch (Exception e) {
       log.error("Should never happen, Excetpion in new stage", e);
@@ -306,6 +307,7 @@ public class ControllerBoard {
       cBoard.startup(mainStage, stage, board);
       mainStage.close();
       currentStage.close();
+      stage.setResizable(false);
       stage.show();
       ///
       // TODO add handling

@@ -99,6 +99,7 @@ public class ControllerMainWindow {
       ControllerBoard cBoard = loader.getController();
       cBoard.startup(mainStage, stage, newBoard);
       mainStage.close();
+      stage.setResizable(false);
       stage.show();
     } catch (Exception e) {
       log.error("Should never happen, Exception in new stage", e);

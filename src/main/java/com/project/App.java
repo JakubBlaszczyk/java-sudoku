@@ -20,6 +20,7 @@ public class App extends Application {
     cMainWindow.setStage(stage);
     stage.setTitle("Baza here");
     stage.setScene(scene);
+    stage.setResizable(false);
     stage.show();
   }
 

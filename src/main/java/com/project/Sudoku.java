@@ -16,8 +16,7 @@ public class Sudoku {
 
   public static void solve(Board board) throws SudokuAlreadySolved, SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
-    if (isSolved(board))
-    {
+    if (isSolved(board)) {
       throw new SudokuAlreadySolved();
     }
     if (!fillOneBoard(board, sudokusToCome)) {
@@ -27,16 +26,22 @@ public class Sudoku {
 
   // this method checks if this Board has an solution
   // if even one solution exists, will return true
-  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable {
+  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable, SudokuAlreadySolved {
     Deque<Board> sudokusToCome = new LinkedList<>();
     Deque<Board> correctSudokus = new LinkedList<>();
     Board board = original.copy();
+    if (isSolved(board)) {
+      throw new SudokuAlreadySolved();
+    }
     if (!fillOneBoard(board, sudokusToCome)) {
       throw new SudokuUnsolvable();
     }
     correctSudokus.push(board);
+    if (sudokusToCome.isEmpty()) {
+      throw new SudokuAlreadySolved();
+    }
     Board temp = sudokusToCome.removeLast();
-    while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 10) {
+    while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 30) {
       correctSudokus.push(temp);
       temp = sudokusToCome.removeLast();
     }
@@ -313,5 +318,4 @@ public class Sudoku {
     return fillOneBoard(temp, sudokusToCome);
   }
 
-  
 }

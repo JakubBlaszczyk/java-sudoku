@@ -87,8 +87,8 @@
                <children>
                   <Button fx:id="Button39" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" />
                   <Button fx:id="Button40" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.rowIndex="1" />
-                  <Button fx:id="Button447" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
-                  <Button fx:id="Button448" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="Button47" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" />
+                  <Button fx:id="Button48" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="Button55" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" />
                   <Button fx:id="Button56" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Button fx:id="Button63" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" />

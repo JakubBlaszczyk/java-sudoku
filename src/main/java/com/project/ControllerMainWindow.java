@@ -48,7 +48,7 @@ public class ControllerMainWindow {
           newBoard.initializeList(6*6, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP6 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Board8x8": {
@@ -58,7 +58,7 @@ public class ControllerMainWindow {
           newBoard.initializeList(8*8, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP8 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Board9x9": {
@@ -68,7 +68,7 @@ public class ControllerMainWindow {
           newBoard.initializeList(9*9, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP9 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Board10x10": {
@@ -78,7 +78,7 @@ public class ControllerMainWindow {
           newBoard.initializeList(10*10, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP10 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Board12x12": {
@@ -88,7 +88,7 @@ public class ControllerMainWindow {
           newBoard.initializeList(12*12, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP12 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         default:

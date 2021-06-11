@@ -23,7 +23,6 @@ import com.project.exceptions.SudokuUnsolvable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.core.joran.action.Action;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -37,6 +36,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -68,11 +68,15 @@ public class ControllerBoard {
   List<Button> allButtons = null;
   Board board = null;
   Board startingBoard = null;
+  boolean editFlag = true;
+  Date start = null;
 
   @FXML
   private GridPane sudokuBoard;
   @FXML
   private HBox setButtons;
+  @FXML
+  private Label modeLabel;
 
   @FXML
   public void initialize() {
@@ -96,16 +100,31 @@ public class ControllerBoard {
     return Integer.valueOf(id.substring(6));
   }
 
-  // TODO change title or some kind of label inside window?
   private void startTimer() {
-    Date start = Calendar.getInstance().getTime();
     Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+      if (editFlag) {
+        return;
+      }
       long countUp = Calendar.getInstance().getTime().getTime() - start.getTime();
-      // TODO add better title?
-      currentStage.setTitle("Sudoku - Time: " + TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS));
+      long seconds = TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS);
+      long minutes = seconds / 60;
+      seconds -= minutes * 60;
+      currentStage.setTitle(formatTime(minutes, seconds));
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
+  }
+
+  private String formatTime(long minutes, long seconds) {
+    String mins = String.valueOf(minutes);
+    String secs = String.valueOf(seconds);
+    if (mins.length() == 1) {
+      mins = "0" + mins;
+    }
+    if (secs.length() == 1) {
+      secs = "0" + secs;
+    }
+    return mins + ":" + secs;
   }
 
   private void setupSudokuButtons() {
@@ -185,50 +204,50 @@ public class ControllerBoard {
           log.debug("Loading 6x6");
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
           newBoard = new Board6x6(new ArrayList<>());
-          newBoard.initializeList(6*6, 0);
+          newBoard.initializeList(6 * 6, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP6 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Load8x8": {
           log.debug("Loading 8x8");
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
           newBoard = new Board8x8(new ArrayList<>());
-          newBoard.initializeList(8*8, 0);
+          newBoard.initializeList(8 * 8, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP8 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Load9x9": {
           log.debug("Loading 9x9");
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
           newBoard = new Board9x9(new ArrayList<>());
-          newBoard.initializeList(9*9, 0);
+          newBoard.initializeList(9 * 9, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP9 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Load10x10": {
           log.debug("Loading 10x10");
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
           newBoard = new Board10x10(new ArrayList<>());
-          newBoard.initializeList(10*10, 0);
+          newBoard.initializeList(10 * 10, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP10 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case "Load12x12": {
           log.debug("Loading 12x12");
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
           newBoard = new Board12x12(new ArrayList<>());
-          newBoard.initializeList(12*12, 0);
+          newBoard.initializeList(12 * 12, 0);
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP12 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         default:
@@ -264,7 +283,7 @@ public class ControllerBoard {
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP6 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case 8: {
@@ -272,7 +291,7 @@ public class ControllerBoard {
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP8 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case 9: {
@@ -280,7 +299,7 @@ public class ControllerBoard {
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP9 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case 10: {
@@ -288,7 +307,7 @@ public class ControllerBoard {
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP10 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         case 12: {
@@ -296,11 +315,11 @@ public class ControllerBoard {
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
           root = (Parent) loader.load();
           stage = new Stage();
-          stage.setTitle("TMP12 - Czas 0");
+          stage.setTitle("00:00");
           break;
         }
         default:
-          // log.error("Should never happen, Invalid ID: {}", mItem.getId());
+          log.error("Should never happen, Invalid size: {}", board.getSize());
           throw new MalformedLinkException("TMP");
       }
       stage.setScene(new Scene(root));
@@ -321,14 +340,14 @@ public class ControllerBoard {
     }
   }
 
-  private void updateBoard() {
+  private void updateBoard(Board board) {
     List<Integer> boardValues = board.getTilesValue();
     for (int i = 0; i < allButtons.size(); ++i) {
       boardValues.set(i, Integer.valueOf(allButtons.get(i).getText()));
     }
   }
 
-  private void updateButtons() {
+  private void updateButtons(Board board) {
     List<Integer> newValues = board.getTilesValue();
     for (int i = 0; i < newValues.size(); ++i) {
       allButtons.get(i).setText(String.valueOf(newValues.get(i)));
@@ -336,7 +355,7 @@ public class ControllerBoard {
   }
 
   public void handleHint(ActionEvent ev) {
-    updateBoard();
+    updateBoard(this.board);
     try {
       Hint hint = Sudoku.hint(board);
       int idx = hint.getX() * board.getSize() + hint.getY();
@@ -354,19 +373,19 @@ public class ControllerBoard {
   }
 
   public void handleSolve(ActionEvent ev) {
-    updateBoard();
+    updateBoard(this.board);
     try {
       // Board will be changed?
       Sudoku.solve(board);
       // Stop timer
-      updateButtons();
+      updateButtons(this.board);
     } catch (SudokuAlreadySolved e) {
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
     }
   }
 
   public void handleCheck(ActionEvent ev) {
-    updateBoard();
+    updateBoard(this.board);
     try {
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
       // Show mistakes
@@ -374,9 +393,20 @@ public class ControllerBoard {
       ;
     }
   }
-  
+
   public void changeMode(ActionEvent ev) {
-    ;
+    if (editFlag) {
+      // TODO add timer reloading
+      editFlag = false;
+      modeLabel.setText("Solve mode");
+      startingBoard = board.copy();
+      updateBoard(startingBoard);
+      start = Calendar.getInstance().getTime();
+    } else {
+      editFlag = true;
+      modeLabel.setText("Edit mode");
+      currentStage.setTitle("00:00");
+    }
   }
 
   public void handleSaveToFile(ActionEvent ev) {

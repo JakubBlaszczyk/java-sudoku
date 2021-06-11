@@ -36,7 +36,7 @@ public class Sudoku {
     }
     correctSudokus.push(board);
     Board temp = sudokusToCome.removeLast();
-    while (fillOneBoard(temp, sudokusToCome)) {
+    while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 10) {
       correctSudokus.push(temp);
       temp = sudokusToCome.removeLast();
     }
@@ -227,7 +227,6 @@ public class Sudoku {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
       for (int i = 0; i < board.getSize(); ++i) {
         if (board.getTileValue(i, y) != 0) {
-          int temp = board.getTileValue(i, y);
           tilesPossibilities.set(posInPossibilities + board.getTileValue(i, y) - 1, false);
         }
       }
@@ -239,7 +238,6 @@ public class Sudoku {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
       for (int i = 0; i < board.getSize(); ++i) {
         if (board.getTileValue(x, i) != 0) {
-          int temp = board.getTileValue(x, i);
           tilesPossibilities.set(posInPossibilities + board.getTileValue(x, i) - 1, false);
         }
       }
@@ -257,7 +255,6 @@ public class Sudoku {
       for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
         for (int j = tempY; j < tempY + board.getBoxHeight(); ++j) {
           if (board.getTileValue(i, j) != 0) {
-          int temp = board.getTileValue(i, j);
             tilesPossibilities.set(posInPossibilities + board.getTileValue(i, j) - 1, false);
           }
         }

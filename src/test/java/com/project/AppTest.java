@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.project.boards.Board;
 import com.project.boards.Board6x6;
 import com.project.exceptions.SudokuAlreadySolved;
 import com.project.exceptions.SudokuUnsolvable;

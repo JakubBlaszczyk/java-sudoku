@@ -5,7 +5,11 @@ import java.util.List;
 
 public class Board12x12 extends Board {
 
-  public Board12x12(List<Integer> tilesValue) {
+  public Board12x12() {
+
+  }
+
+  public Board12x12(ArrayList<Integer> tilesValue) {
     super(tilesValue);
   }
 

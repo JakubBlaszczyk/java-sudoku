@@ -1,11 +1,13 @@
 package com.project.boards;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board10x10 extends Board {
 
-  public Board10x10(List<Integer> tilesValue) {
+  public Board10x10() {
+  }
+
+  public Board10x10(ArrayList<Integer> tilesValue) {
     super(tilesValue);
   }
 

@@ -2,21 +2,29 @@ package com.project;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.boards.Board;
 import com.project.exceptions.MalformedFile;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SudokuState implements SerializationOps {
-  private static Logger log = LoggerFactory.getLogger(SudokuState.class);
+public class SudokuState implements SerializationOps, Serializable {
+  @JsonIgnore
+  private static transient Logger log = LoggerFactory.getLogger(SudokuState.class);
 
   private Board currentBoard;
   private Board startingBoard;
@@ -70,23 +78,43 @@ public class SudokuState implements SerializationOps {
   }
 
   @Override
-  public SudokuState loadFromFile(String filename) throws MalformedFile, IOException {
+  public SudokuState loadFromFile(String filename) throws MalformedFile, IOException, ClassNotFoundException {
     return deserializeXML(filename);
   }
 
   public static void serializeXML(String filename, SudokuState state) throws IOException {
     if (filename != null) {
-      try (FileWriter f = new FileWriter(filename); BufferedWriter out = new BufferedWriter(f);) {
-        XStream mapping = new XStream(new DomDriver());
-        String xml = mapping.toXML(state);
-        out.write(xml);
-      }
+      ObjectMapper mapper = new ObjectMapper();
+      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      mapper.enableDefaultTyping();
+      mapper.writeValue(new File(filename), state);
     }
   }
+
+  // public static void serializeXML(String filename, SudokuState state) throws IOException {
+  //   if (filename != null) {
+  //     try (FileWriter f = new FileWriter(filename); BufferedWriter out = new BufferedWriter(f);) {
+  //       XStream mapping = new XStream(new DomDriver());
+  //       mapping.addPermission(NoTypePermission.NONE);
+  //     mapping.allowTypesByRegExp(new String[] { ".*" });
+  //       String xml = mapping.toXML(state);
+  //       out.write(xml);
+  //     }
+  //   }
+  // }
+
+  // public static void serializeXML(String filename, SudokuState state) {
+  //   try (FileOutputStream fos = new FileOutputStream(filename); ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+  //       oos.writeObject(state);
+  //   } catch (Exception e) {
+  //     e.printStackTrace();
+  //   }
+  // }
 
   public static SudokuState deserializeXML(String filename) throws MalformedFile, IOException {
     StringBuilder xml = new StringBuilder();
     String strLine = "";
+    ObjectMapper mapper = new ObjectMapper();
     if (filename == null) {
       throw new InvalidParameterException("Filename is null, should never happen");
     }
@@ -94,14 +122,44 @@ public class SudokuState implements SerializationOps {
       while ((strLine = r.readLine()) != null) {
         xml.append(strLine);
       }
-      XStream mapping = new XStream(new DomDriver());
-      return (SudokuState) mapping.fromXML(xml.toString());
+      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      mapper.enableDefaultTyping();
+      return mapper.readValue(xml.toString(), SudokuState.class);
+      // return (SudokuState) mapping.fromXML(xml.toString());
     } catch (ClassCastException e) {
       log.error("Cannot cast Object from XML", e);
       throw new MalformedFile();
     }
   }
-}
+
+  // public static SudokuState deserializeXML(String filename) throws MalformedFile, IOException {
+  //   StringBuilder xml = new StringBuilder();
+  //   String strLine = "";
+  //   if (filename == null) {
+  //     throw new InvalidParameterException("Filename is null, should never happen");
+  //   }
+  //   try (FileReader f = new FileReader(filename); BufferedReader r = new BufferedReader(f);) {
+  //     while ((strLine = r.readLine()) != null) {
+  //       xml.append(strLine);
+  //     }
+  //     XStream mapping = new XStream(new DomDriver());
+  //     mapping.addPermission(NoTypePermission.NONE);
+  //     mapping.allowTypesByRegExp(new String[] { ".*" });
+  //     return (SudokuState) mapping.fromXML(xml.toString());
+  //   } catch (ClassCastException e) {
+  //     log.error("Cannot cast Object from XML", e);
+  //     throw new MalformedFile();
+  //   }
+  // }
+
+  // public static SudokuState deserializeXML(String filename) throws ClassNotFoundException, IOException {
+  //   SudokuState state = null;
+  //   try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) {
+  //       state = (SudokuState)ois.readObject();
+  //       return state;
+  //   }
+  // }
+  }
 //
 
 // // Each exception should have it's own message (GUI stuff)

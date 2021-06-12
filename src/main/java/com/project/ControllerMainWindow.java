@@ -125,7 +125,7 @@ public class ControllerMainWindow {
     }
     try {
       SudokuState state = new SudokuState();
-      state.loadFromFile(fHandle.getAbsolutePath());
+      state = state.loadFromFile(fHandle.getAbsolutePath());
       board = state.getCurrentBoard();
       Stage stage;
       Parent root;
@@ -186,6 +186,9 @@ public class ControllerMainWindow {
       throw new RuntimeException(e);
     } catch (MalformedFile e) {
       new Alert(Alert.AlertType.INFORMATION, "Cannot parse malformed file").show();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      new Alert(Alert.AlertType.INFORMATION, "Class not found ???").show();
     }
   }
 

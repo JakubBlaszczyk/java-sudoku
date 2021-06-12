@@ -1,13 +1,19 @@
 package com.project.boards;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Board implements BoardInterface {
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-    protected List<Integer> tilesValue;
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 
-    public Board(List<Integer> tilesValue) {
+public class Board implements BoardInterface, Serializable {
+
+    protected ArrayList<Integer> tilesValue;
+
+    public Board() {}
+
+    public Board(ArrayList<Integer> tilesValue) {
         this.tilesValue = tilesValue;
     }
 
@@ -35,11 +41,11 @@ public class Board implements BoardInterface {
         return tilesValue.set(x * getSize() + y, Integer.valueOf(value));
     }
 
-    public List<Integer> getTilesValue() {
+    public ArrayList<Integer> getTilesValue() {
         return tilesValue;
     }
 
-    public void setTilesValue(List<Integer> tilesValue) {
+    public void setTilesValue(ArrayList<Integer> tilesValue) {
         this.tilesValue = tilesValue;
     }
 

@@ -16,8 +16,7 @@ import com.project.boards.Board12x12;
 import com.project.boards.Board6x6;
 import com.project.boards.Board8x8;
 import com.project.boards.Board9x9;
-import com.project.exceptions.InvalidSudokuData;
-import com.project.exceptions.InvalidSudokuSize;
+import com.project.exceptions.MalformedFile;
 import com.project.exceptions.SudokuAlreadySolved;
 import com.project.exceptions.SudokuUnsolvable;
 
@@ -73,7 +72,7 @@ public class ControllerBoard {
   private Board startingBoard = null;
   private boolean editFlag = true;
   private Date start = null;
-  private long timeBase = null;
+  private long timeBase = 0;
 
   @FXML
   private GridPane sudokuBoard;
@@ -299,9 +298,8 @@ public class ControllerBoard {
     try {
       // board = Board.loadBoard(fHandle.getAbsolutePath());
       // update board
-      SudokuState state;
-      state.loadFromFile(fHandle.getAbsolutePath());
-
+      SudokuState state = new SudokuState();
+      state = state.loadFromFile(fHandle.getAbsolutePath());
       Stage stage;
       Parent root;
       FXMLLoader loader;
@@ -352,7 +350,7 @@ public class ControllerBoard {
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
-      cBoard.startup(mainStage, stage, board);
+      cBoard.startup(mainStage, stage, state);
       mainStage.close();
       currentStage.close();
       stage.setResizable(false);
@@ -361,10 +359,11 @@ public class ControllerBoard {
       // TODO add handling
     } catch (IOException e) {
       throw new RuntimeException(e);
-    } catch (InvalidSudokuData e) {
-      new Alert(Alert.AlertType.INFORMATION, "Not parsable characters in sudoku board").show();
-    } catch (InvalidSudokuSize e) {
-      new Alert(Alert.AlertType.INFORMATION, "Invalid sudoku size, should be 6x6, 8x8, 9x9, 10x10, 12x12").show();
+    } catch (MalformedFile e) {
+      new Alert(Alert.AlertType.INFORMATION, "Cannot parse malformed file").show();
+    } catch (ClassNotFoundException e) {
+      new Alert(Alert.AlertType.INFORMATION, "Class not found exception ???").show();
+      e.printStackTrace();
     }
   }
 
@@ -450,7 +449,7 @@ public class ControllerBoard {
       // TODO add timer reloading
       editFlag = false;
       modeLabel.setText("Solve mode");
-      startingBoard = board.copy();
+      startingBoard = (Board)board.copy();
       log.debug("updating startingBoard");
       updateBoard(startingBoard);
       start = Calendar.getInstance().getTime();
@@ -472,8 +471,15 @@ public class ControllerBoard {
     }
     log.debug(fHandle.getAbsolutePath());
     updateBoard(this.board);
-    SudokuState state;
-    state.saveToFile(fHandle.getAbsolutePath());
+    timeBase = 999;
+    editFlag = true;
+    SudokuState state = new SudokuState(board, startingBoard, timeBase, editFlag);
+    try {
+      state.saveToFile(fHandle.getAbsolutePath());
+    } catch (IOException e) {
+      log.error("Cannot save file in the specified path", e);
+      new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
+    }
     // try {
       // Board.saveBoard(fHandle.getAbsolutePath(), this.board.getTilesValue());
     // } catch (IOException e) {

@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.project.boards.BoardInterface;
 import com.project.exceptions.SudokuAlreadySolved;
 import com.project.exceptions.SudokuUnsolvable;
 
@@ -21,16 +22,13 @@ public class Sudoku {
    * Funtion solving given board. It looks for one solution possible, discarding
    * others.
    * 
-   * @param Board
-   * 
+   * @param BoardInterface
    * @throws SudokuAlreadySolved
    * @throws SudokuUnsolvable
-   * 
-   * 
    * @author Jakub
    */
-  public static void solve(Board board) throws SudokuAlreadySolved, SudokuUnsolvable {
-    Deque<Board> sudokusToCome = new LinkedList<>();
+  public static void solve(BoardInterface board) throws SudokuAlreadySolved, SudokuUnsolvable {
+    Deque<BoardInterface> sudokusToCome = new LinkedList<>();
     if (isSolved(board)) {
       throw new SudokuAlreadySolved();
     }
@@ -49,10 +47,11 @@ public class Sudoku {
    * @throws SudokuUnsolvable
    * @throws SudokuAlreadySolved
    */
-  public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable, SudokuAlreadySolved {
-    Deque<Board> sudokusToCome = new LinkedList<>();
-    Deque<Board> correctSudokus = new LinkedList<>();
-    Board board = original.copy();
+  public static List<Hint> check(BoardInterface in, BoardInterface original)
+      throws SudokuUnsolvable, SudokuAlreadySolved {
+    Deque<BoardInterface> sudokusToCome = new LinkedList<>();
+    Deque<BoardInterface> correctSudokus = new LinkedList<>();
+    BoardInterface board = original.copy();
     if (isSolved(board)) {
       throw new SudokuAlreadySolved();
     }
@@ -63,7 +62,7 @@ public class Sudoku {
     if (sudokusToCome.isEmpty()) {
       throw new SudokuAlreadySolved();
     }
-    Board temp = sudokusToCome.removeLast();
+    BoardInterface temp = sudokusToCome.removeLast();
     while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 30) {
       correctSudokus.push(temp);
       temp = sudokusToCome.removeLast();
@@ -72,7 +71,7 @@ public class Sudoku {
     for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
       min.add(new Hint(0, 0, 0));
     }
-    for (Board one : correctSudokus) {
+    for (BoardInterface one : correctSudokus) {
       ArrayList<Hint> data = compareSudokus(in, one);
       if (data.size() <= min.size()) {
         min = data;
@@ -84,33 +83,28 @@ public class Sudoku {
   /**
    * Returns location of next cell to be modified to solve sudoku.
    * 
-   * @param Board
+   * @param BoardInterface
    * @return Hint that is coordinates and value for single cell to be changed
    * @throws SudokuAlreadySolved
    * @throws SudokuUnsolvable
    * @author Jakub
    */
-  public static Hint hint(Board in) throws SudokuAlreadySolved, SudokuUnsolvable {
-    Deque<Board> sudokusToCome = new LinkedList<>();
+  public static Hint hint(BoardInterface in) throws SudokuAlreadySolved, SudokuUnsolvable {
+    Deque<BoardInterface> sudokusToCome = new LinkedList<>();
     ArrayList<Integer> tilesLogic;
     ArrayList<Boolean> tilesPossibilities;
-    Board board = in.copy();
+    BoardInterface board = in.copy();
     int size = board.getSize();
     tilesLogic = new ArrayList<>(size * size);
     tilesPossibilities = new ArrayList<>(size * size * size);
-    for (int i = 0; i < size * size * size; ++i) {
-      tilesPossibilities.add(true);
-    }
-    for (int i = 0; i < size * size; ++i) {
-      tilesLogic.add(size);
-    }
+    initializeArrayList(tilesPossibilities, size * size * size, true);
+    initializeArrayList(tilesLogic, size * size, size);
     while (true) {
       if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
         Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
         if (temp == null) {
           for (int i = 0; i < sudokusToCome.size();) {
-
-            Board toGive = sudokusToCome.removeFirst();
+            BoardInterface toGive = sudokusToCome.removeFirst();
             ArrayList<Hint> temp2 = compareSudokus(board, toGive);
             temp = temp2.get(0);
             if (fillOneBoard(toGive, sudokusToCome)) {
@@ -137,39 +131,43 @@ public class Sudoku {
   /**
    * Performs solve of one board without changing contents of given board.
    * 
-   * @param Board
+   * @param BoardInterface
    * @return true if is solvable and false if not
    * @author Jakub
    */
-  public static Boolean isSolvable(Board board) {
-    Deque<Board> sudokusToCome = new LinkedList<>();
-    Board temp = board.copy();
+  public static Boolean isSolvable(BoardInterface board) {
+    Deque<BoardInterface> sudokusToCome = new LinkedList<>();
+    BoardInterface temp = board.copy();
     return fillOneBoard(temp, sudokusToCome);
   }
 
   // **************************************
   // Private methods
   // **************************************
-  private static boolean fillOneBoard(Board board, Deque<Board> sudokusToCome) {
+  /**
+   * Internal functions to fill given board with auxiliary queue. Proceeds as long
+   * as there is any sudoku in queue or one sudoku is solved.
+   * 
+   * @param board         current work board
+   * @param sudokusToCome internal queue for sudokus to be fetched
+   * @return true if sudoku is solved, false if it is not solvable
+   * @author Jakub
+   */
+  private static boolean fillOneBoard(BoardInterface board, Deque<BoardInterface> sudokusToCome) {
     ArrayList<Integer> tilesLogic;
     ArrayList<Boolean> tilesPossibilities;
     int size = board.getSize();
     tilesLogic = new ArrayList<>(size * size);
     tilesPossibilities = new ArrayList<>(size * size * size);
-    for (int i = 0; i < size * size * size; ++i) {
-      tilesPossibilities.add(true);
-    }
-    for (int i = 0; i < size * size; ++i) {
-      tilesLogic.add(size);
-    }
+    initializeArrayList(tilesPossibilities, size * size * size, true);
+    initializeArrayList(tilesLogic, size * size, size);
     while (true) {
       if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
         solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
       } else {
         if (isSolved(board)) {
           return true;
-        }
-        if (!sudokusToCome.isEmpty()) {
+        } else if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
           for (int i = 0; i < size * size * size; ++i) {
             tilesPossibilities.set(i, true);
@@ -181,8 +179,46 @@ public class Sudoku {
     }
   }
 
-  private static Hint solveTick(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities,
-      Deque<Board> sudokusToCome) {
+  /**
+   * Function for initializing list with value. Integer variant.
+   * 
+   * @param list
+   * @param size
+   * @param value
+   * @author Jakub
+   */
+  private static void initializeArrayList(ArrayList<Integer> list, int size, Integer value) {
+    for (int i = 0; i < size; ++i) {
+      list.add(value);
+    }
+  }
+
+  /**
+   * Function for initializing list with value. Boolean variant.
+   * 
+   * @param list
+   * @param size
+   * @param value
+   * @author Jakub
+   */
+  private static void initializeArrayList(ArrayList<Boolean> list, int size, Boolean value) {
+    for (int i = 0; i < size; ++i) {
+      list.add(value);
+    }
+  }
+
+  /**
+   * Function that performs one logic cycle.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @param tilesPossibilities
+   * @param sudokusToCome
+   * @return Hint value after one tick
+   * @author Jakub
+   */
+  private static Hint solveTick(BoardInterface board, ArrayList<Integer> tilesLogic,
+      ArrayList<Boolean> tilesPossibilities, Deque<BoardInterface> sudokusToCome) {
     int currentIndex = findSmallest(board, tilesLogic);
     int x = currentIndex / board.getSize();
     int y = currentIndex - x * board.getSize();
@@ -197,15 +233,27 @@ public class Sudoku {
     throw new InvalidParameterException("Shouldn't be here");
   }
 
-  private static void addSudokuOntoStack(Board board, ArrayList<Integer> tilesLogic,
-      ArrayList<Boolean> tilesPossibilities, Deque<Board> sudokusToCome, int x, int y, int currentIndex) {
+  /**
+   * Adds sudoku onto sudokusToCome.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @param tilesPossibilities
+   * @param sudokusToCome
+   * @param x
+   * @param y
+   * @param currentIndex
+   * @author Jakub
+   */
+  private static void addSudokuOntoStack(BoardInterface board, ArrayList<Integer> tilesLogic,
+      ArrayList<Boolean> tilesPossibilities, Deque<BoardInterface> sudokusToCome, int x, int y, int currentIndex) {
     int size = board.getSize();
     int doubleSize = size * size;
     int j = 0;
     for (int i = 1; i < tilesLogic.get(currentIndex); ++i) {
       for (; j < size; ++j) {
         if (Boolean.TRUE.equals(tilesPossibilities.get(x * doubleSize + y * size + j))) {
-          Board tempBoard = board.copy();
+          BoardInterface tempBoard = board.copy();
           tempBoard.setTileValue(x, y, j + 1);
           sudokusToCome.add(tempBoard);
           ++j;
@@ -221,7 +269,14 @@ public class Sudoku {
     }
   }
 
-  private static boolean isSolved(Board board) {
+  /**
+   * Checks if sudoku is solved.
+   * 
+   * @param board
+   * @return true if is solved
+   * @author Jakub
+   */
+  private static boolean isSolved(BoardInterface board) {
     for (int i = 0; i < board.getSize(); ++i) {
       for (int j = 0; j < board.getSize(); ++j) {
         if (board.getTileValue(i, j) == 0) {
@@ -232,7 +287,15 @@ public class Sudoku {
     return true;
   }
 
-  private static boolean isSolvableInternal(Board board, ArrayList<Integer> tilesLogic) {
+  /**
+   * Checks solvability.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @return true if sudoku is solvable
+   * @author Jakub
+   */
+  private static boolean isSolvableInternal(BoardInterface board, ArrayList<Integer> tilesLogic) {
     boolean anyValue = false;
     for (int i = 0; i < board.getSize(); ++i) {
       for (int j = 0; j < board.getSize(); ++j) {
@@ -247,7 +310,17 @@ public class Sudoku {
     return anyValue;
   }
 
-  private static boolean updateLogic(Board board, ArrayList<Integer> tilesLogic,
+  /**
+   * Function resposible for all the logic updates made on tilesLogic and
+   * tilesPossibilties.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @param tilesPossibilities
+   * @return false if sudoku is unsolvable, true if everything is good
+   * @author Jakub
+   */
+  private static boolean updateLogic(BoardInterface board, ArrayList<Integer> tilesLogic,
       ArrayList<Boolean> tilesPossibilities) {
     filledUpdate(board, tilesLogic, tilesPossibilities);
     for (int i = 0; i < board.getSize(); ++i) {
@@ -265,7 +338,16 @@ public class Sudoku {
     return true;
   }
 
-  private static void filledUpdate(Board board, ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities) {
+  /**
+   * Updates logic of fields that are filled.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @param tilesPossibilities
+   * @author Jakub
+   */
+  private static void filledUpdate(BoardInterface board, ArrayList<Integer> tilesLogic,
+      ArrayList<Boolean> tilesPossibilities) {
     for (int i = 0; i < board.getSize(); ++i) {
       for (int j = 0; j < board.getSize(); ++j) {
         if (board.getTileValue(i, j) != 0) {
@@ -279,7 +361,17 @@ public class Sudoku {
     }
   }
 
-  private static void rowLogic(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y)
+  /**
+   * Updates logic in row relative to the specified coordinates (x, y).
+   * 
+   * @param board
+   * @param tilesPossibilities
+   * @param x
+   * @param y
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
+  private static void rowLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
     // if it needs refreshing breeze through line
     if (board.getTileValue(x, y) == 0) {
@@ -290,18 +382,22 @@ public class Sudoku {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
       for (int i = 0; i < board.getSize(); ++i) {
         int boardValue = board.getTileValue(i, y);
-        if (boardValue != 0) {
-          tilesPossibilities.set(posInPossibilities + boardValue - 1, false);
-          if (Boolean.FALSE.equals(valid.get(boardValue - 1))) {
-            throw new SudokuUnsolvable();
-          }
-          valid.set(boardValue - 1, false);
-        }
+        updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
       }
     }
   }
 
-  private static void columnLogic(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y)
+  /**
+   * Updates logic in column relative to the specified coordinates (x, y).
+   * 
+   * @param board
+   * @param tilesPossibilities
+   * @param x
+   * @param y
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
+  private static void columnLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
     if (board.getTileValue(x, y) == 0) {
       ArrayList<Boolean> valid = new ArrayList<>();
@@ -311,18 +407,23 @@ public class Sudoku {
       int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
       for (int i = 0; i < board.getSize(); ++i) {
         int boardValue = board.getTileValue(x, i);
-        if (boardValue != 0) {
-          tilesPossibilities.set(posInPossibilities + boardValue - 1, false);
-          if (Boolean.FALSE.equals(valid.get(boardValue - 1))) {
-            throw new SudokuUnsolvable();
-          }
-          valid.set(boardValue - 1, false);
-        }
+        updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
       }
     }
   }
 
-  private static void boxLogic(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y)
+  /**
+   * Updates logic in box, that is specified in Board with getBoxWidth and
+   * getBoxHeight, relative to the specified coordinates (x, y).
+   * 
+   * @param board
+   * @param tilesPossibilities
+   * @param x
+   * @param y
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
+  private static void boxLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
     if (board.getTileValue(x, y) == 0) {
       ArrayList<Boolean> valid = new ArrayList<>();
@@ -337,18 +438,44 @@ public class Sudoku {
       for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
         for (int j = tempY; j < tempY + board.getBoxHeight(); ++j) {
           int boardValue = board.getTileValue(i, j);
-          if (boardValue != 0) {
-            tilesPossibilities.set(posInPossibilities + boardValue - 1, false);
-            if (Boolean.FALSE.equals(valid.get(boardValue - 1))) {
-              throw new SudokuUnsolvable();
-            }
-            valid.set(boardValue - 1, false);
-          }
+          updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
         }
       }
     }
   }
 
+  /**
+   * Inside function to all Logic functions. Updates tilesPossibilites with
+   * boardValue at posInPossibilities.
+   * 
+   * @param validation
+   * @param tilesPossibilities
+   * @param boardValue
+   * @param posInPossibilities
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
+  private static void updateInsideLogic(ArrayList<Boolean> validation, ArrayList<Boolean> tilesPossibilities,
+      int boardValue, int posInPossibilities) throws SudokuUnsolvable {
+    if (boardValue != 0) {
+      tilesPossibilities.set(posInPossibilities + boardValue - 1, false);
+      if (Boolean.FALSE.equals(validation.get(boardValue - 1))) {
+        throw new SudokuUnsolvable();
+      }
+      validation.set(boardValue - 1, false);
+    }
+  }
+
+  /**
+   * Logic method that updates tilesLogic to current status of tilesPossibilities.
+   * 
+   * @param tilesLogic
+   * @param tilesPossibilities
+   * @param x
+   * @param y
+   * @param size
+   * @author Jakub
+   */
   private static void updateTilesLogic(ArrayList<Integer> tilesLogic, ArrayList<Boolean> tilesPossibilities, int x,
       int y, int size) {
     int count = 0;
@@ -361,7 +488,15 @@ public class Sudoku {
     tilesLogic.set(x * size + y, Integer.valueOf(count));
   }
 
-  private static int findSmallest(Board board, ArrayList<Integer> tilesLogic) {
+  /**
+   * Finds index with smallest amount of possibilities in whole board.
+   * 
+   * @param board
+   * @param tilesLogic
+   * @return index of position with smallest number
+   * @author Jakub
+   */
+  private static int findSmallest(BoardInterface board, ArrayList<Integer> tilesLogic) {
     int smallest = board.getSize() + 1;
     int index = -1;
     for (int i = 0; i < board.getSize(); ++i) {
@@ -375,7 +510,17 @@ public class Sudoku {
     return index;
   }
 
-  private static int fetchNumber(Board board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
+  /**
+   * Fetches first number under smallest coordinates (x, y). Operates at
+   * tilesPossibilities.
+   * 
+   * @param board
+   * @param tilesPossibilities
+   * @param x
+   * @param y
+   * @return number to be replaced with already incremented by 1.
+   */
+  private static int fetchNumber(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
     for (int i = 0; i < board.getSize(); ++i) {
       Boolean condition = tilesPossibilities.get(x * board.getSize() * board.getSize() + y * board.getSize() + i);
       if (Boolean.TRUE.equals(condition)) {
@@ -385,9 +530,15 @@ public class Sudoku {
     return 0;
   }
 
-  // returns array of hints pointing to fields that were already filled.
-  // Does not fill empty fields
-  private static ArrayList<Hint> compareSudokus(Board main, Board solved) {
+  /**
+   * Compares sudokus. Any differences are saved in ArrayList. Does not fill empty
+   * fields.
+   * 
+   * @param main
+   * @param solved
+   * @return array of hints pointing to fields that were already filled.
+   */
+  private static ArrayList<Hint> compareSudokus(BoardInterface main, BoardInterface solved) {
     ArrayList<Hint> returnValue = new ArrayList<>();
     for (int i = 0; i < main.getSize() * main.getSize(); ++i) {
       int x = i / main.getSize();

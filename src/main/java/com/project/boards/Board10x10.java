@@ -3,14 +3,14 @@ package com.project.boards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board10x10 extends BoardFather {
+public class Board10x10 extends Board {
 
   public Board10x10(List<Integer> tilesValue) {
     super(tilesValue);
   }
 
   @Override
-  public Board copy() {
+  public BoardInterface copy() {
     return new Board10x10(new ArrayList<>(tilesValue));
   }
 

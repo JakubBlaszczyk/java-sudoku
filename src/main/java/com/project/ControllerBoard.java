@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.naming.MalformedLinkException;
 
+import com.project.boards.Board;
 import com.project.boards.Board10x10;
 import com.project.boards.Board12x12;
 import com.project.boards.Board6x6;
@@ -72,6 +73,7 @@ public class ControllerBoard {
   private Board startingBoard = null;
   private boolean editFlag = true;
   private Date start = null;
+  private long timeBase = null;
 
   @FXML
   private GridPane sudokuBoard;
@@ -172,10 +174,26 @@ public class ControllerBoard {
   }
 
   public void startup(Stage mainStage, Stage currentStage, Board board) {
-    log.debug("Startup");
+    log.debug("Startup - size");
     this.board = board;
     this.mainStage = mainStage;
     this.currentStage = currentStage;
+    startup();
+  }
+
+  public void startup(Stage mainStage, Stage currentStage, SudokuState state) {
+    log.debug("Startup - stage");
+    this.board = state.getCurrentBoard();
+    this.startingBoard = state.getStartingBoard();
+    this.editFlag = state.getEditFlag();
+    this.timeBase = state.getTimeBase();
+    this.mainStage = mainStage;
+    this.currentStage = currentStage;
+    startup();
+  }
+
+  public void startup() {
+    log.debug("Startup main");
     setupSudokuButtons();
     setupNumberButtons();
     startTimer();
@@ -267,7 +285,7 @@ public class ControllerBoard {
       stage.setResizable(false);
       stage.show();
     } catch (Exception e) {
-      log.error("Should never happen, Excetpion in new stage", e);
+      log.error("Should never happen, Exception in new stage", e);
     }
   }
 
@@ -279,7 +297,11 @@ public class ControllerBoard {
       return;
     }
     try {
-      board = Board.loadBoard(fHandle.getAbsolutePath());
+      // board = Board.loadBoard(fHandle.getAbsolutePath());
+      // update board
+      SudokuState state;
+      state.loadFromFile(fHandle.getAbsolutePath());
+
       Stage stage;
       Parent root;
       FXMLLoader loader;
@@ -415,7 +437,8 @@ public class ControllerBoard {
       // Show mistakes
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
-      new Alert(Alert.AlertType.INFORMATION, "Starting board is unsolvable. Check cannot verify your progress, start again").show();
+      new Alert(Alert.AlertType.INFORMATION,
+          "Starting board is unsolvable. Check cannot verify your progress, start again").show();
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Already solved").show();
@@ -449,11 +472,13 @@ public class ControllerBoard {
     }
     log.debug(fHandle.getAbsolutePath());
     updateBoard(this.board);
-    try {
-      Board.saveBoard(fHandle.getAbsolutePath(), this.board.getTilesValue());
-    } catch (IOException e) {
-      log.error("Cannot save file in the specified path", e);
-      new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
-    }
+    SudokuState state;
+    state.saveToFile(fHandle.getAbsolutePath());
+    // try {
+      // Board.saveBoard(fHandle.getAbsolutePath(), this.board.getTilesValue());
+    // } catch (IOException e) {
+    //   log.error("Cannot save file in the specified path", e);
+    //   new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
+    // }
   }
 }

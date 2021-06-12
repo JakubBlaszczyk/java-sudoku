@@ -20,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import com.project.boards.Board;
 import com.project.boards.Board10x10;
 import com.project.boards.Board12x12;
 import com.project.boards.Board6x6;
@@ -27,6 +29,7 @@ import com.project.boards.Board8x8;
 import com.project.boards.Board9x9;
 import com.project.exceptions.InvalidSudokuData;
 import com.project.exceptions.InvalidSudokuSize;
+import com.project.exceptions.MalformedFile;
 
 public class ControllerMainWindow {
   private static Logger log = LoggerFactory.getLogger(ControllerMainWindow.class);
@@ -39,13 +42,15 @@ public class ControllerMainWindow {
     FXMLLoader loader;
     Board newBoard;
     Button button = (Button) ev.getSource();
+    int size = 0;
     try {
       switch (button.getId()) {
         case "Board6x6": {
           log.debug("Board 6x6");
           loader = new FXMLLoader(getClass().getResource("/fxml/6x6v2.fxml"));
           newBoard = new Board6x6(new ArrayList<>());
-          newBoard.initializeList(6*6, 0);
+          newBoard.initializeList(6 * 6, 0);
+          // size = 6;
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("00:00");
@@ -55,7 +60,8 @@ public class ControllerMainWindow {
           log.debug("Board 8x8");
           loader = new FXMLLoader(getClass().getResource("/fxml/8x8v2.fxml"));
           newBoard = new Board8x8(new ArrayList<>());
-          newBoard.initializeList(8*8, 0);
+          newBoard.initializeList(8 * 8, 0);
+          // size = 8;
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("00:00");
@@ -65,7 +71,8 @@ public class ControllerMainWindow {
           log.debug("Board 9x9");
           loader = new FXMLLoader(getClass().getResource("/fxml/9x9v2.fxml"));
           newBoard = new Board9x9(new ArrayList<>());
-          newBoard.initializeList(9*9, 0);
+          newBoard.initializeList(9 * 9, 0);
+          // size = 9;
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("00:00");
@@ -75,7 +82,8 @@ public class ControllerMainWindow {
           log.debug("Board 10x10");
           loader = new FXMLLoader(getClass().getResource("/fxml/10x10v2.fxml"));
           newBoard = new Board10x10(new ArrayList<>());
-          newBoard.initializeList(10*10, 0);
+          newBoard.initializeList(10 * 10, 0);
+          // size = 10;
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("00:00");
@@ -85,7 +93,8 @@ public class ControllerMainWindow {
           log.debug("Board 12x12");
           loader = new FXMLLoader(getClass().getResource("/fxml/12x12v2.fxml"));
           newBoard = new Board12x12(new ArrayList<>());
-          newBoard.initializeList(12*12, 0);
+          newBoard.initializeList(12 * 12, 0);
+          // size = 12;
           root = (Parent) loader.load();
           stage = new Stage();
           stage.setTitle("00:00");
@@ -115,12 +124,9 @@ public class ControllerMainWindow {
       return;
     }
     try {
-      board = Board.loadBoard(fHandle.getAbsolutePath());
-      List<Integer> vals = board.getTilesValue();
-      // for (int i = 0; i < vals.size(); ++i) {
-      // allButtons.get(i).setText(String.valueOf(vals.get(i)));
-      // }
-      ///
+      SudokuState state = new SudokuState();
+      state.loadFromFile(fHandle.getAbsolutePath());
+      board = state.getCurrentBoard();
       Stage stage;
       Parent root;
       FXMLLoader loader;
@@ -166,22 +172,20 @@ public class ControllerMainWindow {
           break;
         }
         default:
-          // log.error("Should never happen, Invalid ID: {}", mItem.getId());
+          log.error("Should never happen, Invalid size: {}", board.getSize());
           throw new MalformedLinkException("TMP");
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
-      cBoard.startup(mainStage, stage, board);
+      cBoard.startup(mainStage, stage, state);
       mainStage.close();
       stage.show();
       ///
       // TODO add handling
     } catch (IOException e) {
       throw new RuntimeException(e);
-    } catch (InvalidSudokuData e) {
-      new Alert(Alert.AlertType.INFORMATION, "Not parsable characters in sudoku board").show();
-    } catch (InvalidSudokuSize e) {
-      new Alert(Alert.AlertType.INFORMATION, "Invalid sudoku size, should be 6x6, 8x8, 9x9, 10x10, 12x12").show();
+    } catch (MalformedFile e) {
+      new Alert(Alert.AlertType.INFORMATION, "Cannot parse malformed file").show();
     }
   }
 

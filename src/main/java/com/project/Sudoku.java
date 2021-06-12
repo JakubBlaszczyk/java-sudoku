@@ -46,6 +46,7 @@ public class Sudoku {
    * @return List of differences between solved sudoku and "in".
    * @throws SudokuUnsolvable
    * @throws SudokuAlreadySolved
+   * @author Jakub
    */
   public static List<Hint> check(BoardInterface in, BoardInterface original)
       throws SudokuUnsolvable, SudokuAlreadySolved {
@@ -103,23 +104,13 @@ public class Sudoku {
       if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
         Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
         if (temp == null) {
-          for (int i = 0; i < sudokusToCome.size();) {
-            BoardInterface toGive = sudokusToCome.removeFirst();
-            ArrayList<Hint> temp2 = compareSudokus(board, toGive);
-            temp = temp2.get(0);
-            if (fillOneBoard(toGive, sudokusToCome)) {
-              return temp;
-            } else {
-              throw new SudokuUnsolvable();
-            }
-          }
+          return findHintForMultiplePossibilities(board, sudokusToCome);
         }
         return temp;
       } else {
         if (isSolved(board)) {
           throw new SudokuAlreadySolved();
-        }
-        if (!sudokusToCome.isEmpty()) {
+        } else if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
         } else {
           throw new SudokuUnsolvable();
@@ -519,6 +510,7 @@ public class Sudoku {
    * @param x
    * @param y
    * @return number to be replaced with already incremented by 1.
+   * @author Jakub
    */
   private static int fetchNumber(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
     for (int i = 0; i < board.getSize(); ++i) {
@@ -531,12 +523,36 @@ public class Sudoku {
   }
 
   /**
+   * Returns hint to the first move from all the tables.
+   * 
+   * @param board
+   * @param sudokusToCome
+   * @return hint to be returned in "hint" function
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
+  private static Hint findHintForMultiplePossibilities(BoardInterface board, Deque<BoardInterface> sudokusToCome)
+      throws SudokuUnsolvable {
+    for (int i = 0; i < sudokusToCome.size();) {
+      BoardInterface toGive = sudokusToCome.removeFirst();
+      ArrayList<Hint> temp2 = compareSudokus(board, toGive);
+      if (fillOneBoard(toGive, sudokusToCome)) {
+        return temp2.get(0);
+      } else {
+        throw new SudokuUnsolvable();
+      }
+    }
+    throw new InvalidParameterException("Unknown error");
+  }
+
+  /**
    * Compares sudokus. Any differences are saved in ArrayList. Does not fill empty
    * fields.
    * 
    * @param main
    * @param solved
    * @return array of hints pointing to fields that were already filled.
+   * @author Jakub
    */
   private static ArrayList<Hint> compareSudokus(BoardInterface main, BoardInterface solved) {
     ArrayList<Hint> returnValue = new ArrayList<>();

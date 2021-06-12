@@ -14,6 +14,21 @@ public class Sudoku {
   private Sudoku() {
   }
 
+  // **************************************
+  // Public methods
+  // **************************************
+  /**
+   * Funtion solving given board. It looks for one solution possible, discarding
+   * others.
+   * 
+   * @param Board
+   * 
+   * @throws SudokuAlreadySolved
+   * @throws SudokuUnsolvable
+   * 
+   * 
+   * @author Jakub
+   */
   public static void solve(Board board) throws SudokuAlreadySolved, SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
     if (isSolved(board)) {
@@ -24,8 +39,16 @@ public class Sudoku {
     }
   }
 
-  // this method checks if this Board has an solution
-  // if even one solution exists, will return true
+  /**
+   * Checks possible outcomes of original with current state of in. Returns all
+   * deviances.
+   * 
+   * @param in       current state of original Board
+   * @param original original Board that will be compared to
+   * @return List of differences between solved sudoku and "in".
+   * @throws SudokuUnsolvable
+   * @throws SudokuAlreadySolved
+   */
   public static List<Hint> check(Board in, Board original) throws SudokuUnsolvable, SudokuAlreadySolved {
     Deque<Board> sudokusToCome = new LinkedList<>();
     Deque<Board> correctSudokus = new LinkedList<>();
@@ -58,6 +81,15 @@ public class Sudoku {
     return min;
   }
 
+  /**
+   * Returns location of next cell to be modified to solve sudoku.
+   * 
+   * @param Board
+   * @return Hint that is coordinates and value for single cell to be changed
+   * @throws SudokuAlreadySolved
+   * @throws SudokuUnsolvable
+   * @author Jakub
+   */
   public static Hint hint(Board in) throws SudokuAlreadySolved, SudokuUnsolvable {
     Deque<Board> sudokusToCome = new LinkedList<>();
     ArrayList<Integer> tilesLogic;
@@ -102,6 +134,22 @@ public class Sudoku {
     }
   }
 
+  /**
+   * Performs solve of one board without changing contents of given board.
+   * 
+   * @param Board
+   * @return true if is solvable and false if not
+   * @author Jakub
+   */
+  public static Boolean isSolvable(Board board) {
+    Deque<Board> sudokusToCome = new LinkedList<>();
+    Board temp = board.copy();
+    return fillOneBoard(temp, sudokusToCome);
+  }
+
+  // **************************************
+  // Private methods
+  // **************************************
   private static boolean fillOneBoard(Board board, Deque<Board> sudokusToCome) {
     ArrayList<Integer> tilesLogic;
     ArrayList<Boolean> tilesPossibilities;
@@ -349,12 +397,6 @@ public class Sudoku {
       }
     }
     return returnValue;
-  }
-
-  public static Boolean isSolvable(Board board) {
-    Deque<Board> sudokusToCome = new LinkedList<>();
-    Board temp = board.copy();
-    return fillOneBoard(temp, sudokusToCome);
   }
 
 }

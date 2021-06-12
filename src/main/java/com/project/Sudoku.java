@@ -103,23 +103,13 @@ public class Sudoku {
       if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
         Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
         if (temp == null) {
-          for (int i = 0; i < sudokusToCome.size();) {
-            BoardInterface toGive = sudokusToCome.removeFirst();
-            ArrayList<Hint> temp2 = compareSudokus(board, toGive);
-            temp = temp2.get(0);
-            if (fillOneBoard(toGive, sudokusToCome)) {
-              return temp;
-            } else {
-              throw new SudokuUnsolvable();
-            }
-          }
+          return findHintForMultiplePossibilities(board, sudokusToCome);
         }
         return temp;
       } else {
         if (isSolved(board)) {
           throw new SudokuAlreadySolved();
-        }
-        if (!sudokusToCome.isEmpty()) {
+        } else if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
         } else {
           throw new SudokuUnsolvable();
@@ -528,6 +518,28 @@ public class Sudoku {
       }
     }
     return 0;
+  }
+
+  /**
+   * Returns hint to the first move from all the tables.
+   * 
+   * @param board
+   * @param sudokusToCome
+   * @return hint to be returned in "hint" function
+   * @throws SudokuUnsolvable
+   */
+  private static Hint findHintForMultiplePossibilities(BoardInterface board, Deque<BoardInterface> sudokusToCome)
+      throws SudokuUnsolvable {
+    for (int i = 0; i < sudokusToCome.size();) {
+      BoardInterface toGive = sudokusToCome.removeFirst();
+      ArrayList<Hint> temp2 = compareSudokus(board, toGive);
+      if (fillOneBoard(toGive, sudokusToCome)) {
+        return temp2.get(0);
+      } else {
+        throw new SudokuUnsolvable();
+      }
+    }
+    throw new InvalidParameterException("Unknown error");
   }
 
   /**

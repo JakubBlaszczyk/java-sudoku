@@ -14,7 +14,6 @@ public class App extends Application {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/fxml/Bazav2.fxml"));
     Parent root = loader.load();
-    // Should be defined as consts somewhere
     Scene scene = new Scene(root, 300, 275);
     ControllerMainWindow cMainWindow = loader.getController();
     cMainWindow.setStage(stage);

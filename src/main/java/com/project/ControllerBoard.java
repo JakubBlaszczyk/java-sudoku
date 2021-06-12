@@ -79,6 +79,10 @@ public class ControllerBoard {
   private HBox setButtons;
   @FXML
   private Label modeLabel;
+  @FXML
+  private Button changeModeButton;
+  @FXML
+  private Button CheckButton;
 
   @FXML
   public void initialize() {
@@ -396,10 +400,7 @@ public class ControllerBoard {
 
   public void handleCheck(ActionEvent ev) {
     updateBoard(this.board);
-    if (editFlag) {
-      startingBoard = board.copy();
-      updateBoard(startingBoard);
-    }
+    changeMode(null);
     try {
       log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
@@ -414,7 +415,7 @@ public class ControllerBoard {
       // Show mistakes
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
-      new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
+      new Alert(Alert.AlertType.INFORMATION, "Starting board is unsolvable. Check cannot verify your progress, start again").show();
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Already solved").show();
@@ -430,10 +431,7 @@ public class ControllerBoard {
       log.debug("updating startingBoard");
       updateBoard(startingBoard);
       start = Calendar.getInstance().getTime();
-    } else {
-      editFlag = true;
-      modeLabel.setText("Edit mode");
-      currentStage.setTitle("00:00");
+      changeModeButton.setDisable(true);
     }
   }
 

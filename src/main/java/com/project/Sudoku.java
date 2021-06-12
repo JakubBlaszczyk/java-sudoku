@@ -73,8 +73,7 @@ public class Sudoku {
       tilesLogic.add(size);
     }
     while (true) {
-      updateLogic(board, tilesLogic, tilesPossibilities);
-      if (isSolvableInternal(board, tilesLogic)) {
+      if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
         Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
         if (temp == null) {
           for (int i = 0; i < sudokusToCome.size();) {

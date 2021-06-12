@@ -3,10 +3,8 @@ package com.project.boards;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.Board;
+public class Board10x10 extends BoardFather {
 
-public class Board10x10 extends Board {
-  
   public Board10x10(List<Integer> tilesValue) {
     super(tilesValue);
   }
@@ -15,7 +13,7 @@ public class Board10x10 extends Board {
   public Board copy() {
     return new Board10x10(new ArrayList<>(tilesValue));
   }
-  
+
   @Override
   public int getSize() {
     return 10;
@@ -23,11 +21,11 @@ public class Board10x10 extends Board {
 
   @Override
   public int getBoxWidth() {
-      return 5;
+    return 5;
   }
 
   @Override
   public int getBoxHeight() {
-      return 2;
+    return 2;
   }
 }

@@ -46,6 +46,7 @@ public class Sudoku {
    * @return List of differences between solved sudoku and "in".
    * @throws SudokuUnsolvable
    * @throws SudokuAlreadySolved
+   * @author Jakub
    */
   public static List<Hint> check(BoardInterface in, BoardInterface original)
       throws SudokuUnsolvable, SudokuAlreadySolved {
@@ -509,6 +510,7 @@ public class Sudoku {
    * @param x
    * @param y
    * @return number to be replaced with already incremented by 1.
+   * @author Jakub
    */
   private static int fetchNumber(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y) {
     for (int i = 0; i < board.getSize(); ++i) {
@@ -527,6 +529,7 @@ public class Sudoku {
    * @param sudokusToCome
    * @return hint to be returned in "hint" function
    * @throws SudokuUnsolvable
+   * @author Jakub
    */
   private static Hint findHintForMultiplePossibilities(BoardInterface board, Deque<BoardInterface> sudokusToCome)
       throws SudokuUnsolvable {
@@ -549,6 +552,7 @@ public class Sudoku {
    * @param main
    * @param solved
    * @return array of hints pointing to fields that were already filled.
+   * @author Jakub
    */
   private static ArrayList<Hint> compareSudokus(BoardInterface main, BoardInterface solved) {
     ArrayList<Hint> returnValue = new ArrayList<>();

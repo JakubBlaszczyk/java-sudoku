@@ -223,7 +223,6 @@ public class ControllerBoard {
       log.error("Window is null");
       throw new NullPointerException();
     }
-    // TODO Some popup to prevent?
     wnd.setOnCloseRequest(new EventHandler<WindowEvent>() {
       @Override
       public void handle(WindowEvent ev) {
@@ -413,6 +412,7 @@ public class ControllerBoard {
     List<Integer> newValues = board.getTilesValue();
     for (int i = 0; i < newValues.size(); ++i) {
       allButtons.get(i).setText(String.valueOf(newValues.get(i)));
+      allButtons.get(i).setBackground(white);
     }
   }
 
@@ -455,10 +455,8 @@ public class ControllerBoard {
     updateBoard(this.board);
     changeMode(null);
     try {
-      // Board will be changed?
       log.info("Calling solve");
       Sudoku.solve(board);
-      // Stop timer
       updateButtons(this.board);
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);

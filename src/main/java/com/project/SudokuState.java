@@ -1,15 +1,9 @@
 package com.project;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 
@@ -80,7 +74,7 @@ public class SudokuState implements SerializationOps, Serializable {
   public void setEditFlag(boolean editFlag) {
     this.editFlag = editFlag;
   }
-
+  
   @Override
   public void saveToFile(String filename) throws IOException {
     serializeXML(filename, this);

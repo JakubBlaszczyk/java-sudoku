@@ -59,6 +59,10 @@ public class ControllerBoard {
       new BackgroundFill(Color.RED, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
   private Background white = new Background(
       new BackgroundFill(Color.WHITE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
+  private Background green = new Background(
+      new BackgroundFill(Color.GREEN, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
+  private Background gray = new Background(
+    new BackgroundFill(Color.GRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
   private Stage mainStage = null;
   private Stage currentStage = null;
   private List<Button> allButtons = null;
@@ -134,10 +138,10 @@ public class ControllerBoard {
   private void setupSudokuButtons() {
     EventHandler<ActionEvent> handler = ev -> {
       Button button = ((Button) ev.getSource());
-      if (button.getBackground().equals(red)) {
+      if (button.getBackground().equals(gray)) {
         button.setBackground(white);
       } else {
-        button.setBackground(red);
+        button.setBackground(gray);
       }
     };
 
@@ -150,7 +154,7 @@ public class ControllerBoard {
     EventHandler<MouseEvent> handler = ev -> {
       int clicked = 0;
       for (Button button : allButtons) {
-        if (button.getBackground().equals(red)) {
+        if (button.getBackground().equals(gray)) {
           ++clicked;
           button.setText(((Button) ev.getSource()).getText());
           button.setBackground(white);
@@ -420,7 +424,8 @@ public class ControllerBoard {
       log.debug("IDX: {}", idx);
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
-      changedButton.setBackground(red);
+      changedButton.setBackground(green);
+      revertColorAfterDelay();
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
@@ -473,8 +478,9 @@ public class ControllerBoard {
         log.debug("IDX: {}", idx);
         Button changedButton = allButtons.get(idx);
         changedButton.setText(String.valueOf(hint.getValue()));
+        changedButton.setBackground(green);
       }
-      // Show mistakes
+      revertColorAfterDelay();
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION,
@@ -525,5 +531,17 @@ public class ControllerBoard {
       log.error("Cannot save file in the specified path", e);
       new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
     }
+  }
+
+  private void revertColorAfterDelay() {
+    Timeline revertTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> {
+      for (Button button : allButtons) {
+        if (button.getBackground().equals(green)) {
+          button.setBackground(white);
+        }
+      }
+    }));
+    revertTimeline.setCycleCount(Animation.INDEFINITE);
+    revertTimeline.play();
   }
 }

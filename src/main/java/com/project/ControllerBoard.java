@@ -50,6 +50,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class ControllerBoard {
@@ -62,7 +63,7 @@ public class ControllerBoard {
   private Background green = new Background(
       new BackgroundFill(Color.GREEN, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
   private Background gray = new Background(
-    new BackgroundFill(Color.GRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
+      new BackgroundFill(Color.GRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0)));
   private Stage mainStage = null;
   private Stage currentStage = null;
   private List<Button> allButtons = null;
@@ -174,11 +175,12 @@ public class ControllerBoard {
   }
 
   /**
-   * Called when creating new window with newly created game state.
-   * It will initialize every component.
-   * @param mainStage stage creating new window
+   * Called when creating new window with newly created game state. It will
+   * initialize every component.
+   * 
+   * @param mainStage    stage creating new window
    * @param currentStage stage containing newly created window
-   * @param board zero initialized Board
+   * @param board        zero initialized Board
    * @author Arkadiusz
    */
   public void startup(Stage mainStage, Stage currentStage, Board board) {
@@ -190,11 +192,12 @@ public class ControllerBoard {
   }
 
   /**
-   * Should be called when creating new window using data from game save.
-   * It will populate all the data and initialize every component
-   * @param mainStage stage creating new window
+   * Should be called when creating new window using data from game save. It will
+   * populate all the data and initialize every component
+   * 
+   * @param mainStage    stage creating new window
    * @param currentStage stage containing newly created window
-   * @param state class containing game state
+   * @param state        class containing game state
    * @author Arkadiusz
    */
   public void startup(Stage mainStage, Stage currentStage, SudokuState state) {
@@ -223,10 +226,13 @@ public class ControllerBoard {
       throw new NullPointerException();
     }
     // TODO Some popup to prevent?
-    wnd.setOnCloseRequest(ev -> {
-      ev.consume();
-      currentStage.hide();
-      mainStage.show();
+    wnd.setOnCloseRequest(new EventHandler<WindowEvent>() {
+      @Override
+      public void handle(WindowEvent ev) {
+        ev.consume();
+        currentStage.hide();
+        mainStage.show();
+      };
     });
     if (allButtons.size() == board.getTilesValue().size()) {
       for (int i = 0; i < allButtons.size(); ++i) {
@@ -234,9 +240,10 @@ public class ControllerBoard {
       }
     }
   }
-  
+
   /**
    * Handles new board button click, creates new Board with specified size.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -315,7 +322,9 @@ public class ControllerBoard {
   }
 
   /**
-   * Handles loading new board from file click, loads new Board from specified by user path using JSON deserialization.
+   * Handles loading new board from file click, loads new Board from specified by
+   * user path using JSON deserialization.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -410,6 +419,7 @@ public class ControllerBoard {
 
   /**
    * Handles hint request.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -425,7 +435,7 @@ public class ControllerBoard {
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
       changedButton.setBackground(green);
-      revertColorAfterDelay();
+      revertColorAfterDelay(changedButton);
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
@@ -438,6 +448,7 @@ public class ControllerBoard {
 
   /**
    * Handles solve request.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -462,6 +473,7 @@ public class ControllerBoard {
 
   /**
    * Handles check request.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -479,8 +491,8 @@ public class ControllerBoard {
         Button changedButton = allButtons.get(idx);
         changedButton.setText(String.valueOf(hint.getValue()));
         changedButton.setBackground(green);
+        revertColorAfterDelay(changedButton);
       }
-      revertColorAfterDelay();
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION,
@@ -494,6 +506,7 @@ public class ControllerBoard {
 
   /**
    * Handles change mode.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -501,7 +514,7 @@ public class ControllerBoard {
     if (editFlag) {
       editFlag = false;
       modeLabel.setText("Solve mode");
-      startingBoard = (Board)board.copy();
+      startingBoard = (Board) board.copy();
       log.debug("updating startingBoard");
       updateBoard(startingBoard);
       start = Calendar.getInstance().getTime();
@@ -511,6 +524,7 @@ public class ControllerBoard {
 
   /**
    * Handles save to file request.
+   * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
    */
@@ -533,15 +547,13 @@ public class ControllerBoard {
     }
   }
 
-  private void revertColorAfterDelay() {
-    Timeline revertTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> {
-      for (Button button : allButtons) {
-        if (button.getBackground().equals(green)) {
-          button.setBackground(white);
-        }
+  private void revertColorAfterDelay(Button button) {
+    Timeline revertTimeline = new Timeline(new KeyFrame(Duration.seconds(4), e -> {
+      if (button.getBackground().equals(green)) {
+        button.setBackground(white);
       }
     }));
-    revertTimeline.setCycleCount(Animation.INDEFINITE);
+    revertTimeline.setCycleCount(1);
     revertTimeline.play();
   }
 }

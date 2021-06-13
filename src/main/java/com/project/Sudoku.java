@@ -22,7 +22,7 @@ public class Sudoku {
    * Funtion solving given board. It looks for one solution possible, discarding
    * others.
    * 
-   * @param BoardInterface
+   * @param board takes board to be solved.
    * @throws SudokuAlreadySolved
    * @throws SudokuUnsolvable
    * @author Jakub
@@ -45,8 +45,8 @@ public class Sudoku {
    * Checks possible outcomes of original with current state of in. Returns all
    * deviances.
    * 
-   * @param in       current state of original Board
-   * @param original original Board that will be compared to
+   * @param in       current state of original Board.
+   * @param original original Board that will be compared to.
    * @return List of differences between solved sudoku and "in".
    * @throws SudokuUnsolvable
    * @throws SudokuAlreadySolved
@@ -58,39 +58,45 @@ public class Sudoku {
     Deque<BoardInterface> correctSudokus = new LinkedList<>();
     BoardInterface board = original.copy();
     boolean isSolved = isSolved(board);
-    if (!fillOneBoard(board, sudokusToCome)) {
-      throw new SudokuUnsolvable();
-    }
-    if (isSolved) {
-      throw new SudokuAlreadySolved();
-    }
-    correctSudokus.push(board);
-    if (sudokusToCome.isEmpty()) {
-      throw new SudokuAlreadySolved();
-    }
-    BoardInterface temp = sudokusToCome.removeLast();
-    while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 30) {
-      correctSudokus.push(temp);
-      temp = sudokusToCome.removeLast();
-    }
-    ArrayList<Hint> min = new ArrayList<>();
-    for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
-      min.add(new Hint(0, 0, 0));
-    }
-    for (BoardInterface one : correctSudokus) {
-      ArrayList<Hint> data = compareSudokus(in, one);
-      if (data.size() <= min.size()) {
-        min = data;
+    boolean isSolved2 = isSolved(in);
+    BoardInterface inCopy = in.copy();
+    if (!fillOneBoard(inCopy, sudokusToCome)) {
+      if (isSolved2) {
+        throw new SudokuAlreadySolved();
+      } else if (!fillOneBoard(board, sudokusToCome)) {
+        throw new SudokuUnsolvable();
+      } else if (isSolved) {
+        throw new SudokuAlreadySolved();
       }
+      correctSudokus.push(board);
+      if (sudokusToCome.isEmpty()) {
+        throw new SudokuAlreadySolved();
+      }
+      BoardInterface temp = sudokusToCome.removeLast();
+      while (fillOneBoard(temp, sudokusToCome) && correctSudokus.size() < 30) {
+        correctSudokus.push(temp);
+        temp = sudokusToCome.removeLast();
+      }
+      ArrayList<Hint> min = new ArrayList<>();
+      for (int i = 0; i < in.getSize() * in.getSize(); ++i) {
+        min.add(new Hint(0, 0, 0));
+      }
+      for (BoardInterface one : correctSudokus) {
+        ArrayList<Hint> data = compareSudokus(in, one);
+        if (data.size() <= min.size()) {
+          min = data;
+        }
+      }
+      return min;
     }
-    return min;
+    return new ArrayList<>();
   }
 
   /**
    * Returns location of next cell to be modified to solve sudoku.
    * 
-   * @param BoardInterface
-   * @return Hint that is coordinates and value for single cell to be changed
+   * @param in sudoku upon which solving will be done. It is not modified.
+   * @return Hint that is coordinates and value for single cell to be changed.
    * @throws SudokuAlreadySolved
    * @throws SudokuUnsolvable
    * @author Jakub
@@ -128,8 +134,8 @@ public class Sudoku {
   /**
    * Performs solve of one board without changing contents of given board.
    * 
-   * @param BoardInterface
-   * @return true if is solvable and false if not
+   * @param board Board to be checked. Not modified.
+   * @return true if is solvable and false if not.
    * @author Jakub
    */
   public static Boolean isSolvable(BoardInterface board) {

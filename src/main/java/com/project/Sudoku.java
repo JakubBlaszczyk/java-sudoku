@@ -61,9 +61,7 @@ public class Sudoku {
     boolean isSolved2 = isSolved(in);
     BoardInterface inCopy = in.copy();
     if (!fillOneBoard(inCopy, sudokusToCome)) {
-      if (isSolved2) {
-        throw new SudokuAlreadySolved();
-      } else if (!fillOneBoard(board, sudokusToCome)) {
+      if (!fillOneBoard(board, sudokusToCome)) {
         throw new SudokuUnsolvable();
       } else if (isSolved) {
         throw new SudokuAlreadySolved();
@@ -88,6 +86,10 @@ public class Sudoku {
         }
       }
       return min;
+    }
+    if(isSolved2)
+    {
+      throw new SudokuAlreadySolved();
     }
     return new ArrayList<>();
   }

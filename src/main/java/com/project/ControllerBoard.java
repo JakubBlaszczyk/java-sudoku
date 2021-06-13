@@ -37,7 +37,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -53,11 +52,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-// TODO:
-// switching windows : DONE
-// Load from file : DONE
-// Reafactor
-
 public class ControllerBoard {
   private static Logger log = LoggerFactory.getLogger(ControllerBoard.class);
 
@@ -71,8 +65,10 @@ public class ControllerBoard {
   private Board board = null;
   private Board startingBoard = null;
   private boolean editFlag = true;
+  private long loadTimeBase = 0;
+  private long actualTimeBase = 0;
+  private Timeline timeline = null;
   private Date start = null;
-  private long timeBase = 0;
 
   @FXML
   private GridPane sudokuBoard;
@@ -108,14 +104,15 @@ public class ControllerBoard {
   }
 
   private void startTimer() {
-    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
       if (editFlag) {
         return;
       }
       long countUp = Calendar.getInstance().getTime().getTime() - start.getTime();
-      long seconds = TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS);
+      long seconds = TimeUnit.SECONDS.convert(countUp, TimeUnit.MILLISECONDS) + loadTimeBase + 1;
       long minutes = seconds / 60;
       seconds -= minutes * 60;
+      ++actualTimeBase;
       currentStage.setTitle(formatTime(minutes, seconds));
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -184,10 +181,14 @@ public class ControllerBoard {
     log.debug("Startup - stage");
     this.board = state.getCurrentBoard();
     this.startingBoard = state.getStartingBoard();
-    this.editFlag = state.getEditFlag();
-    this.timeBase = state.getTimeBase();
+    this.loadTimeBase = state.getTimeBase();
     this.mainStage = mainStage;
     this.currentStage = currentStage;
+    if (!state.getEditFlag()) {
+      editFlag = false;
+      start = Calendar.getInstance().getTime();
+      changeModeButton.setDisable(true);
+    }
     startup();
   }
 
@@ -383,6 +384,7 @@ public class ControllerBoard {
 
   public void handleHint(ActionEvent ev) {
     updateBoard(this.board);
+    changeMode(null);
     try {
       log.info("Calling hint");
       Hint hint = Sudoku.hint(board);
@@ -396,6 +398,7 @@ public class ControllerBoard {
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
+      timeline.stop();
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
@@ -404,6 +407,7 @@ public class ControllerBoard {
 
   public void handleSolve(ActionEvent ev) {
     updateBoard(this.board);
+    changeMode(null);
     try {
       // Board will be changed?
       log.info("Calling solve");
@@ -413,6 +417,7 @@ public class ControllerBoard {
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku already solved").show();
+      timeline.stop();
     } catch (SudokuUnsolvable e) {
       log.debug("Unsolvable", e);
       new Alert(Alert.AlertType.INFORMATION, "Sudoku unsolvable").show();
@@ -441,12 +446,12 @@ public class ControllerBoard {
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
       new Alert(Alert.AlertType.INFORMATION, "Already solved").show();
+      timeline.stop();
     }
   }
 
   public void changeMode(ActionEvent ev) {
     if (editFlag) {
-      // TODO add timer reloading
       editFlag = false;
       modeLabel.setText("Solve mode");
       startingBoard = (Board)board.copy();
@@ -458,33 +463,21 @@ public class ControllerBoard {
   }
 
   public void handleSaveToFile(ActionEvent ev) {
-    Menu file = new Menu("File");
-    MenuItem item = new MenuItem("Save");
-    file.getItems().addAll(item);
-    // Creating a File chooser
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save");
-    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*"));
     File fHandle = fileChooser.showSaveDialog(currentStage);
     if (fHandle == null) {
       return;
     }
     log.debug(fHandle.getAbsolutePath());
     updateBoard(this.board);
-    timeBase = 999;
-    editFlag = true;
-    SudokuState state = new SudokuState(board, startingBoard, timeBase, editFlag);
+    SudokuState state = new SudokuState(board, startingBoard, actualTimeBase, editFlag);
     try {
       state.saveToFile(fHandle.getAbsolutePath());
     } catch (IOException e) {
       log.error("Cannot save file in the specified path", e);
       new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
     }
-    // try {
-      // Board.saveBoard(fHandle.getAbsolutePath(), this.board.getTilesValue());
-    // } catch (IOException e) {
-    //   log.error("Cannot save file in the specified path", e);
-    //   new Alert(Alert.AlertType.ERROR, "Cannot save file in the specified path").show();
-    // }
   }
 }

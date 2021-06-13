@@ -1,7 +1,6 @@
 package com.project.boards;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board12x12 extends Board {
 

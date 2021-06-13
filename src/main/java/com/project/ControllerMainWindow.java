@@ -30,7 +30,7 @@ public class ControllerMainWindow {
   private Stage mainStage;
 
   /**
-   * 
+   * Handle loading new Board from fxml file with empty sudoku fields
    * @param ev
    */
   public void handleNewBoard(ActionEvent ev) {
@@ -108,7 +108,7 @@ public class ControllerMainWindow {
   }
 
   /**
-   * 
+   * Handle loading new Board from fxml file with sudoku fields loaded from user provided file save
    * @param ev
    */
   public void handleLoadFile(ActionEvent ev) {
@@ -185,10 +185,11 @@ public class ControllerMainWindow {
       new Alert(Alert.AlertType.INFORMATION, "Class not found ???").show();
     }
   }
-
+  
   /**
-   * 
+   * Setter for stage
    * @param stage
+   * @author Arkadiusz
    */
   public void setStage(Stage stage) {
     mainStage = stage;

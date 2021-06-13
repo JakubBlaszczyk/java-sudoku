@@ -468,7 +468,8 @@ public class ControllerBoard {
   }
 
   /**
-   * Handles check request.
+   * Handles check request. It compares starting board (created in edit mode) with current board,
+   * and shows every differences between current solution and correct one 
    * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
@@ -479,7 +480,6 @@ public class ControllerBoard {
     try {
       log.info("Calling check");
       List<Hint> mistakes = Sudoku.check(board, startingBoard);
-      log.debug("Check passed");
       for (Hint hint : mistakes) {
         int idx = hint.getX() * board.getSize() + hint.getY();
         log.debug("Hint: {}, {}, {}", hint.getX(), hint.getY(), hint.getValue());
@@ -501,7 +501,7 @@ public class ControllerBoard {
   }
 
   /**
-   * Handles change mode.
+   * Handles change mode. it will change mode from edit to solve, and disable button responsible for it
    * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz
@@ -519,7 +519,8 @@ public class ControllerBoard {
   }
 
   /**
-   * Handles save to file request.
+   * Handles save to file request. Displays fileChooser letting user to decide where he wants to store his data,
+   * then it will serialize it via JSON
    * 
    * @param ev Event details passed by JavaFX runtime
    * @author Arkadiusz

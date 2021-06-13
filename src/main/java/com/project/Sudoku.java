@@ -29,12 +29,16 @@ public class Sudoku {
    */
   public static void solve(BoardInterface board) throws SudokuAlreadySolved, SudokuUnsolvable {
     Deque<BoardInterface> sudokusToCome = new LinkedList<>();
-    if (isSolved(board)) {
-      throw new SudokuAlreadySolved();
-    }
-    if (!fillOneBoard(board, sudokusToCome)) {
+    boolean isSolved = isSolved(board);
+    BoardInterface copy = board.copy();
+    if (!fillOneBoard(copy, sudokusToCome)) {
       throw new SudokuUnsolvable();
     }
+    if (isSolved) {
+      throw new SudokuAlreadySolved();
+    }
+    sudokusToCome.clear();
+    fillOneBoard(board, sudokusToCome);
   }
 
   /**
@@ -53,11 +57,12 @@ public class Sudoku {
     Deque<BoardInterface> sudokusToCome = new LinkedList<>();
     Deque<BoardInterface> correctSudokus = new LinkedList<>();
     BoardInterface board = original.copy();
-    if (isSolved(board)) {
-      throw new SudokuAlreadySolved();
-    }
+    boolean isSolved = isSolved(board);
     if (!fillOneBoard(board, sudokusToCome)) {
       throw new SudokuUnsolvable();
+    }
+    if (isSolved) {
+      throw new SudokuAlreadySolved();
     }
     correctSudokus.push(board);
     if (sudokusToCome.isEmpty()) {
@@ -101,14 +106,15 @@ public class Sudoku {
     initializeArrayList(tilesPossibilities, size * size * size, true);
     initializeArrayList(tilesLogic, size * size, size);
     while (true) {
-      if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
+      boolean updateLogic = updateLogic(board, tilesLogic, tilesPossibilities);
+      if (updateLogic && isSolvableInternal(board, tilesLogic)) {
         Hint temp = solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
         if (temp == null) {
           return findHintForMultiplePossibilities(board, sudokusToCome);
         }
         return temp;
       } else {
-        if (isSolved(board)) {
+        if (updateLogic && isSolved(board)) {
           throw new SudokuAlreadySolved();
         } else if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
@@ -153,10 +159,11 @@ public class Sudoku {
     initializeArrayList(tilesPossibilities, size * size * size, true);
     initializeArrayList(tilesLogic, size * size, size);
     while (true) {
-      if (updateLogic(board, tilesLogic, tilesPossibilities) && isSolvableInternal(board, tilesLogic)) {
+      boolean updateLogic = updateLogic(board, tilesLogic, tilesPossibilities);
+      if (updateLogic && isSolvableInternal(board, tilesLogic)) {
         solveTick(board, tilesLogic, tilesPossibilities, sudokusToCome);
       } else {
-        if (isSolved(board)) {
+        if (updateLogic && isSolved(board)) {
           return true;
         } else if (!sudokusToCome.isEmpty()) {
           board = sudokusToCome.removeLast();
@@ -365,16 +372,14 @@ public class Sudoku {
   private static void rowLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
     // if it needs refreshing breeze through line
-    if (board.getTileValue(x, y) == 0) {
-      ArrayList<Boolean> valid = new ArrayList<>();
-      for (int i = 0; i < board.getSize(); ++i) {
-        valid.add(true);
-      }
-      int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
-      for (int i = 0; i < board.getSize(); ++i) {
-        int boardValue = board.getTileValue(i, y);
-        updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
-      }
+    ArrayList<Boolean> valid = new ArrayList<>();
+    for (int i = 0; i < board.getSize(); ++i) {
+      valid.add(true);
+    }
+    int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+    for (int i = 0; i < board.getSize(); ++i) {
+      int boardValue = board.getTileValue(i, y);
+      updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
     }
   }
 
@@ -390,16 +395,14 @@ public class Sudoku {
    */
   private static void columnLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
-    if (board.getTileValue(x, y) == 0) {
-      ArrayList<Boolean> valid = new ArrayList<>();
-      for (int i = 0; i < board.getSize(); ++i) {
-        valid.add(true);
-      }
-      int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
-      for (int i = 0; i < board.getSize(); ++i) {
-        int boardValue = board.getTileValue(x, i);
-        updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
-      }
+    ArrayList<Boolean> valid = new ArrayList<>();
+    for (int i = 0; i < board.getSize(); ++i) {
+      valid.add(true);
+    }
+    int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+    for (int i = 0; i < board.getSize(); ++i) {
+      int boardValue = board.getTileValue(x, i);
+      updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
     }
   }
 
@@ -416,21 +419,19 @@ public class Sudoku {
    */
   private static void boxLogic(BoardInterface board, ArrayList<Boolean> tilesPossibilities, int x, int y)
       throws SudokuUnsolvable {
-    if (board.getTileValue(x, y) == 0) {
-      ArrayList<Boolean> valid = new ArrayList<>();
-      for (int i = 0; i < board.getSize(); ++i) {
-        valid.add(true);
-      }
-      int tempX;
-      int tempY;
-      int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
-      tempX = (x / board.getBoxWidth()) * board.getBoxWidth();
-      tempY = (y / board.getBoxHeight()) * board.getBoxHeight();
-      for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
-        for (int j = tempY; j < tempY + board.getBoxHeight(); ++j) {
-          int boardValue = board.getTileValue(i, j);
-          updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
-        }
+    ArrayList<Boolean> valid = new ArrayList<>();
+    for (int i = 0; i < board.getSize(); ++i) {
+      valid.add(true);
+    }
+    int tempX;
+    int tempY;
+    int posInPossibilities = x * board.getSize() * board.getSize() + y * board.getSize();
+    tempX = (x / board.getBoxWidth()) * board.getBoxWidth();
+    tempY = (y / board.getBoxHeight()) * board.getBoxHeight();
+    for (int i = tempX; i < tempX + board.getBoxWidth(); ++i) {
+      for (int j = tempY; j < tempY + board.getBoxHeight(); ++j) {
+        int boardValue = board.getTileValue(i, j);
+        updateInsideLogic(valid, tilesPossibilities, boardValue, posInPossibilities);
       }
     }
   }

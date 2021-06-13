@@ -17,7 +17,7 @@ public class App extends Application {
     Scene scene = new Scene(root, 300, 275);
     ControllerMainWindow cMainWindow = loader.getController();
     cMainWindow.setStage(stage);
-    stage.setTitle("Baza here");
+    stage.setTitle("Choose board");
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();

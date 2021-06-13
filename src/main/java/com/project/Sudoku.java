@@ -19,7 +19,7 @@ public class Sudoku {
   // Public methods
   // **************************************
   /**
-   * Funtion solving given board. It looks for one solution possible, discarding
+   * Function solving given board. It looks for one solution possible, discarding
    * others.
    * 
    * @param board takes board to be solved.
@@ -317,8 +317,8 @@ public class Sudoku {
   }
 
   /**
-   * Function resposible for all the logic updates made on tilesLogic and
-   * tilesPossibilties.
+   * Function responsible for all the logic updates made on tilesLogic and
+   * tilesPossibilities.
    * 
    * @param board
    * @param tilesLogic
@@ -445,7 +445,7 @@ public class Sudoku {
   }
 
   /**
-   * Inside function to all Logic functions. Updates tilesPossibilites with
+   * Inside function to all Logic functions. Updates tilesPossibilities with
    * boardValue at posInPossibilities.
    * 
    * @param validation

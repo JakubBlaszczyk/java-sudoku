@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.naming.MalformedLinkException;
-
 import com.project.boards.Board;
 import com.project.boards.Board10x10;
 import com.project.boards.Board12x12;
@@ -490,7 +488,7 @@ public class ControllerBoard {
         log.debug("IDX: {}", idx);
         Button changedButton = allButtons.get(idx);
         changedButton.setText(String.valueOf(hint.getValue()));
-        changedButton.setBackground(green);
+        changedButton.setBackground(red);
         revertColorAfterDelay(changedButton);
       }
     } catch (SudokuUnsolvable e) {

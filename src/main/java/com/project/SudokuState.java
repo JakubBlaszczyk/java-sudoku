@@ -28,7 +28,7 @@ public class SudokuState implements SerializationOps, Serializable {
   private boolean editFlag;
 
   /**
-   * Upon creation of instance assing mapper. The rest is default.
+   * Upon creation of instance assign mapper. The rest is default.
    * 
    * @author Arkadiusz
    */
@@ -42,7 +42,7 @@ public class SudokuState implements SerializationOps, Serializable {
    * Constructor with initialization.
    * 
    * @param currentBoard Board on which player solves. 
-   * @param startingBoard Board that playes started solving on.
+   * @param startingBoard Board that player started solving on.
    * @param timeBase 
    * @param editFlag Specified in witch state you are in. True is edit, false is solve state.
    * @author Arkadiusz

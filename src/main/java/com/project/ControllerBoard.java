@@ -336,6 +336,7 @@ public class ControllerBoard {
     try {
       SudokuState state = new SudokuState();
       state = state.loadFromFile(fHandle.getAbsolutePath());
+      board = state.getCurrentBoard();
       Stage stage;
       Parent root;
       FXMLLoader loader;

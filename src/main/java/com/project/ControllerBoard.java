@@ -412,7 +412,6 @@ public class ControllerBoard {
     List<Integer> newValues = board.getTilesValue();
     for (int i = 0; i < newValues.size(); ++i) {
       allButtons.get(i).setText(String.valueOf(newValues.get(i)));
-      allButtons.get(i).setBackground(white);
     }
   }
 

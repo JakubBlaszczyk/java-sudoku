@@ -31,6 +31,10 @@ public class ControllerMainWindow {
   private static Logger log = LoggerFactory.getLogger(ControllerMainWindow.class);
   private Stage mainStage;
 
+  /**
+   * 
+   * @param ev
+   */
   public void handleNewBoard(ActionEvent ev) {
     log.debug("handleNewBoard, ActionEvent: {}", ev);
     Stage stage;
@@ -92,7 +96,7 @@ public class ControllerMainWindow {
         }
         default:
           log.error("Should never happen, Invalid ID: {}", button.getId());
-          throw new MalformedLinkException("TMP");
+          throw new RuntimeException("Should never happen");
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
@@ -105,6 +109,10 @@ public class ControllerMainWindow {
     }
   }
 
+  /**
+   * 
+   * @param ev
+   */
   public void handleLoadFile(ActionEvent ev) {
     FileChooser fChooser = new FileChooser();
     fChooser.setTitle("Choose sudoku board file");
@@ -180,6 +188,10 @@ public class ControllerMainWindow {
     }
   }
 
+  /**
+   * 
+   * @param stage
+   */
   public void setStage(Stage stage) {
     mainStage = stage;
   }

@@ -169,6 +169,14 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Called when creating new window with newly created game state.
+   * It will initialize every component.
+   * @param mainStage stage creating new window
+   * @param currentStage stage containing newly created window
+   * @param board zero initialized Board
+   * @author Arkadiusz
+   */
   public void startup(Stage mainStage, Stage currentStage, Board board) {
     log.debug("Startup - size");
     this.board = board;
@@ -177,6 +185,14 @@ public class ControllerBoard {
     startup();
   }
 
+  /**
+   * Should be called when creating new window using data from game save.
+   * It will populate all the data and initialize every component
+   * @param mainStage stage creating new window
+   * @param currentStage stage containing newly created window
+   * @param state class containing game state
+   * @author Arkadiusz
+   */
   public void startup(Stage mainStage, Stage currentStage, SudokuState state) {
     log.debug("Startup - stage");
     this.board = state.getCurrentBoard();
@@ -192,7 +208,7 @@ public class ControllerBoard {
     startup();
   }
 
-  public void startup() {
+  private void startup() {
     log.debug("Startup main");
     setupSudokuButtons();
     setupNumberButtons();
@@ -214,7 +230,12 @@ public class ControllerBoard {
       }
     }
   }
-
+  
+  /**
+   * Handles new board button click, creates new Board with specified size.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void handleNewBoard(ActionEvent ev) {
     log.debug("handleNewBoard, ActionEvent: {}", ev);
     Stage stage;
@@ -276,7 +297,7 @@ public class ControllerBoard {
         }
         default:
           log.error("Should never happen, Invalid ID: {}", mItem.getId());
-          throw new MalformedLinkException("TMP");
+          throw new RuntimeException("Should never happen");
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
@@ -289,7 +310,12 @@ public class ControllerBoard {
     }
   }
 
-  public void LoadFromFile(ActionEvent ev) throws MalformedLinkException {
+  /**
+   * Handles loading new board from file click, loads new Board from specified by user path using JSON deserialization.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
+  public void LoadFromFile(ActionEvent ev) {
     FileChooser fChooser = new FileChooser();
     fChooser.setTitle("Choose sudoku board file");
     File fHandle = fChooser.showOpenDialog(currentStage);
@@ -297,8 +323,6 @@ public class ControllerBoard {
       return;
     }
     try {
-      // board = Board.loadBoard(fHandle.getAbsolutePath());
-      // update board
       SudokuState state = new SudokuState();
       state = state.loadFromFile(fHandle.getAbsolutePath());
       Stage stage;
@@ -347,7 +371,7 @@ public class ControllerBoard {
         }
         default:
           log.error("Should never happen, Invalid size: {}", board.getSize());
-          throw new MalformedLinkException("TMP");
+          throw new RuntimeException("Should never happen");
       }
       stage.setScene(new Scene(root));
       ControllerBoard cBoard = loader.getController();
@@ -356,8 +380,6 @@ public class ControllerBoard {
       currentStage.close();
       stage.setResizable(false);
       stage.show();
-      ///
-      // TODO add handling
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (MalformedFile e) {
@@ -382,6 +404,11 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Handles hint request.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void handleHint(ActionEvent ev) {
     updateBoard(this.board);
     changeMode(null);
@@ -393,7 +420,6 @@ public class ControllerBoard {
       log.debug("IDX: {}", idx);
       Button changedButton = allButtons.get(idx);
       changedButton.setText(String.valueOf(hint.getValue()));
-      // TODO ?
       changedButton.setBackground(red);
     } catch (SudokuAlreadySolved e) {
       log.debug("Already solved", e);
@@ -405,6 +431,11 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Handles solve request.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void handleSolve(ActionEvent ev) {
     updateBoard(this.board);
     changeMode(null);
@@ -424,6 +455,11 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Handles check request.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void handleCheck(ActionEvent ev) {
     updateBoard(this.board);
     changeMode(null);
@@ -450,6 +486,11 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Handles change mode.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void changeMode(ActionEvent ev) {
     if (editFlag) {
       editFlag = false;
@@ -462,6 +503,11 @@ public class ControllerBoard {
     }
   }
 
+  /**
+   * Handles save to file request.
+   * @param ev Event details passed by JavaFX runtime
+   * @author Arkadiusz
+   */
   public void handleSaveToFile(ActionEvent ev) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save");

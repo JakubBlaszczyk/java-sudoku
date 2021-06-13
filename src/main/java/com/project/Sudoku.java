@@ -117,7 +117,7 @@ public class Sudoku {
         if (updateLogic && isSolved(board)) {
           throw new SudokuAlreadySolved();
         } else if (!sudokusToCome.isEmpty()) {
-          board = sudokusToCome.removeLast();
+          board.setTilesValue(sudokusToCome.removeLast().getTilesValue());
         } else {
           throw new SudokuUnsolvable();
         }
@@ -166,7 +166,7 @@ public class Sudoku {
         if (updateLogic && isSolved(board)) {
           return true;
         } else if (!sudokusToCome.isEmpty()) {
-          board = sudokusToCome.removeLast();
+          board.setTilesValue(sudokusToCome.removeLast().getTilesValue());
           for (int i = 0; i < size * size * size; ++i) {
             tilesPossibilities.set(i, true);
           }

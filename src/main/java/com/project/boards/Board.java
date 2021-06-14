@@ -2,6 +2,7 @@ package com.project.boards;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -9,11 +10,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 public class Board implements BoardInterface, Serializable {
 
-    protected ArrayList<Integer> tilesValue;
+    protected transient List<Integer> tilesValue;
 
     public Board() {}
 
-    public Board(ArrayList<Integer> tilesValue) {
+    public Board(List<Integer> tilesValue) {
         this.tilesValue = tilesValue;
     }
 
@@ -41,11 +42,11 @@ public class Board implements BoardInterface, Serializable {
         return tilesValue.set(x * getSize() + y, Integer.valueOf(value));
     }
 
-    public ArrayList<Integer> getTilesValue() {
+    public List<Integer> getTilesValue() {
         return tilesValue;
     }
 
-    public void setTilesValue(ArrayList<Integer> tilesValue) {
+    public void setTilesValue(List<Integer> tilesValue) {
         this.tilesValue = tilesValue;
     }
 

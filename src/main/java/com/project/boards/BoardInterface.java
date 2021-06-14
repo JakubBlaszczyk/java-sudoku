@@ -1,6 +1,6 @@
 package com.project.boards;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface BoardInterface {
 
@@ -16,9 +16,9 @@ public interface BoardInterface {
 
   public int setTileValue(int x, int y, int value);
 
-  public ArrayList<Integer> getTilesValue();
+  public List<Integer> getTilesValue();
 
-  public void setTilesValue(ArrayList<Integer> tilesValue);
+  public void setTilesValue(List<Integer> tilesValue);
 
   public void initializeList(int size, int value);
 }

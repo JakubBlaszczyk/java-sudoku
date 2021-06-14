@@ -1,5 +1,6 @@
 package com.project.boards;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Board9x9 extends Board {
@@ -7,7 +8,7 @@ public class Board9x9 extends Board {
   public Board9x9() {
   }
 
-  public Board9x9(ArrayList<Integer> tilesValue) {
+  public Board9x9(List<Integer> tilesValue) {
     super(tilesValue);
   }
 

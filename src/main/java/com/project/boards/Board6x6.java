@@ -1,13 +1,14 @@
 package com.project.boards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board6x6 extends Board {
 
   public Board6x6() {
   }
 
-  public Board6x6(ArrayList<Integer> tilesValue) {
+  public Board6x6(List<Integer> tilesValue) {
     super(tilesValue);
   }
 
